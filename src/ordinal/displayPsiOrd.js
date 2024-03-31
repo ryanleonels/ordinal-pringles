@@ -57,7 +57,6 @@ function displayBase2PsiOrd(ord, trim = data.ord.trim) {
     if(ord.lt(2)) return extraOrdMarks2[ord]
     let finalOutput = ""
     if(ord.lt(2**297)) {
-        console.log(ord.toString())
         const magnitude = Decimal.floor(Decimal.ln(ord.div(2)).div(Decimal.ln(2)))
         const magnitudeAmount = D(2).times(Decimal.pow(2, magnitude))
         finalOutput = ordMarks2[Decimal.min(magnitude,ordMarks2.length-1)]

@@ -96,7 +96,7 @@ function fixOldSaves(){
     data.ord.ordinal = D(data.ord.ordinal)
 
     //AutoShift Fix
-    if(data.markup.shifts > 7) data.markup.shifts = 7
+    if(data.markup.shifts > 7 + data.base2) data.markup.shifts = 7 + data.base2
 
     //v0.2.3 and v0.3b2 => v0.3
     if(data.loadedVersion === "0.2.3" || data.loadedVersion === "0.3b2"){
