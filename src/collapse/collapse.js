@@ -98,6 +98,9 @@ function updateAllAlephHTML(){
 }
 function updateTotalAlephHTML(){
     DOM(`alephTotal`).innerHTML = `You have <span style='color: #20da45'><b>${format(getTotalAlephs())} Total ℵ</b></span>, multiplying Cardinal gain by <span style='color: #20da45'><b>${format(alephTotalEffect())}x</b></span>`
+    if(data.collapse.hasCUP[7]) {
+        DOM(`alephTotal`).innerHTML += `<br>Most Cardinals collapsed at once: <span style='color: #20da45'><b>${format(data.collapse.bestCardinalsGained)}</b></span>, providing a constant <span style='color: #20da45'><b>${format(data.collapse.bestCardinalsGained*cupEffect(7)/100)}</b></span> Cardinals per second`
+    }
 }
 function updateUnlockHTML(mode, i){
     switch (mode) {
