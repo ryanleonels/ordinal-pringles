@@ -34,7 +34,7 @@ function factorEffect(n){
     const mult = bup0Effect()
     const add = hasFactor(n)?bup10Effect():0
     if(data.chal.active[1] || data.factors[n] < 1) return 1+add*mult
-    return ((data.factors[n]+(1+add))*mult*bup7Effect())*(Math.max(1+(data.markup.shifts-n-1)/10, 1)**[1, 1, 1, 1, 1.3, 1.9, 2.2, 2.3][data.markup.shifts])
+    return ((data.factors[n]+(1+add))*mult*bup7Effect())*(Math.max(1+(data.markup.shifts-n-1)/10, 1)**[1, 1, 1, 1, 1.3, 1.9, 2.2, 2.3, 2.4][data.markup.shifts])
 }
 function factorBoost(){
     let mult = 1
@@ -50,7 +50,10 @@ function buyFactor(n){
 }
 function buyMaxFactor(){
     if(data.chal.active[1]) return
-    if(data.ord.isPsi) return data.factors = [9,8,7,7,6,6,6]
+    if(data.ord.isPsi) {
+        if (data.ord.base >= 3) return data.factors = [9,8,7,7,6,6,6]
+        if (data.ord.base <= 2) return data.factors = [9,8,7,7,6,6,6,6]
+    }
     if(data.baseless.baseless){
         for (let i = data.baseless.shifts-1; i >= 0; i--){
             if(!hasFactor(i)) break
@@ -101,4 +104,15 @@ function calcDyGain(){
     let ao2 = inPurification(1) ? getAOREffect(2) : 1
     let boost = (data.ord.base < 6 || data.boost.isCharged[11]) ? bup11Effect() : 1
     return Math.min(D(data.dy.gain).mul(boost).mul(iup2Effect()).mul(dynamicShiftMultipliers[1]()).mul(chargeBoost).div(ao2).toNumber(), Number.MAX_VALUE)
+}
+
+function addFactor(n){
+    if (data.factors.length <= n) data.factors[n] = 0
+    let button = document.createElement('button');
+    button.setAttribute("class", "factor");
+    button.setAttribute("id", `factor${n}`);
+    button.setAttribute("onclick", `buyFactor(${n})`);
+    let text = document.createTextNode(`Factor ${n}`);
+    button.appendChild(text);
+    DOM("factorSubPage").appendChild(button);
 }

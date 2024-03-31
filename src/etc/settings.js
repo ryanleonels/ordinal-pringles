@@ -53,6 +53,7 @@ function toggleOrdDisplay(){
 function toggleBase2(){
     data.base2 = !data.base2
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
+    if (data.base2) addFactor(8)
     return save()
 }
 

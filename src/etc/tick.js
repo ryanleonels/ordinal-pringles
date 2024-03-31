@@ -18,6 +18,10 @@ function tick(diff){
         data.ord.isPsi = true
         data.ord.ordinal = D(4)
     }
+    if(!data.ord.isPsi && data.ord.ordinal.gte(4) && data.ord.base === 2 && !data.omegaMode) {
+        data.ord.isPsi = true
+        data.ord.ordinal = D(2)
+    }
 
     // Check for Challenge Completion
     chalComplete()
