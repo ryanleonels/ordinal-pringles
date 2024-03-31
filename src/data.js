@@ -42,6 +42,8 @@ function getDefaultObject() {
         isBeta: IS_BETA,
         offline: true,
         gword: {unl: false, enabled: false},
+        base2: false,
+        omegaMode: false,
     }
 }
 let data = getDefaultObject()

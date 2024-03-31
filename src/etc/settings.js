@@ -13,6 +13,20 @@ function settingsToggle(i){
         return save()
     }
 
+    if (i === -2){
+        data.base2 = !data.base2
+        DOM(`base2Toggle`).innerHTML = `Toggle Base 2 ${settingsColor(data.base2)}`
+        return save()
+    }
+
+    if (i === -3){
+        data.omegaMode = !data.omegaMode
+        DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
+        if (data.omegaMode && data.ord.isPsi) data.ord.isPsi = false
+        if (!data.omegaMode && data.ord.ordinal.gte(PSI_VALUE) && data.ord.base === 3) data.ord.isPsi = true
+        return save()
+    }
+
     i === 14 ? data.gword.enabled = !data.gword.enabled : data.sToggles[i] = !data.sToggles[i]
     if (i === 6) DOM(`progressBarContainer`).style.display = data.sToggles[i] ? `flex` : `none`
 
@@ -52,6 +66,8 @@ function toggleOrdDisplay(){
 
 function loadSettings(){
     DOM(`offlineProgressToggle`).innerHTML = `Toggle Offline Progress ${settingsColor(data.offline)}`
+    DOM(`base2Toggle`).innerHTML = `Toggle Base 2 ${settingsColor(data.base2)}`
+    DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
     DOM(`changeOrdLength`).children[0].innerHTML = `[${data.ord.trim}]`
 
     DOM(`changeOrdColor`).children[0].innerHTML = data.ord.color ? `[Shifting]` : `[Normal]`

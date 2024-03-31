@@ -85,7 +85,7 @@ function calcOrdPoints(ord = data.ord.ordinal, base = data.ord.base, over = data
     if (trim >= 10) return new Decimal(0)
     if (Decimal.lt(ord, base)) {
         return Decimal.add(ord, over)
-    } else if (new Decimal(ord).slog(base).lt(base)) {
+    } else if (new Decimal(ord).slog(base).lt(base) || true) {
         let powerOfOmega = Decimal.log(new Decimal(ord).add(0.1), base).floor()
         let highestPower = Decimal.pow(base,powerOfOmega)
         let powerMultiplier = Decimal.floor(Decimal.div(new Decimal(ord).add(0.1),highestPower))

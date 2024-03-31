@@ -14,7 +14,7 @@ let t2Auto = () => inPurification(2)
 
 function tick(diff){
     // TODO: PSI Check, probably doesn't need to be on tick()
-    if(!data.ord.isPsi && data.ord.ordinal.gte(PSI_VALUE) && data.ord.base === 3) {
+    if(!data.ord.isPsi && data.ord.ordinal.gte(PSI_VALUE) && data.ord.base === 3 && !data.omegaMode) {
         data.ord.isPsi = true
         data.ord.ordinal = D(4)
     }
