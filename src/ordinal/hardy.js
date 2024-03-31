@@ -341,7 +341,7 @@ function psiHardy(ord, base) {
     if (ord.toString() === "NaNeNaN") return "NEVER"; // NEVER
     if (ord.toString() === "NaNeInfinity") return "Ω"; // Absolute Infinity
 
-    if (base === 2) { // psi base 2 - in reverse order, individual values are only available up to omega fixed point (per-level value above that point) - bottom values are 3 instead of 2 as arrays with 2,2 as starting values are degenerate
+    if (base === 2) { // psi base 2 - in reverse order, individual values are only available up to omega fixed point (per-level value above that point) - bottom values are 2,3 instead of 2,2 as arrays with 2,2 as starting values are degenerate
         if (D(ord.layer).gte(D("3.2317006071311436e616"))) return "s(2,3{1,,1,,1,2}2)"; // ψ(I_ω) level
         if (ord.gte(D("ee79.36560556844312"))) return "s(2,3{1,,1,2,,2}2)"; // ψ(Ω_(I+ω)) level (highest level reachable below 10^^Number.MAX_VALUE)
         if (ord.gte(2**297)) return "s(2,3{1,,2,,2}2)"; // ψ(Ω_(I+1)) level (using Strong Array Notation until Iω) (highest level reachable below Number.MAX_VALUE)
