@@ -10,7 +10,7 @@ function updateMarkupHTML(){
         data.ord.isPsi?`Markup and gain ${ordinalDisplay('', data.ord.ordinal.plus(1), data.ord.over, data.ord.base, ((data.ord.displayType === "BMS") || (data.ord.displayType === "Y-Sequence")) ? Math.max(data.ord.trim, 4) : 4)} (I)`:
         data.ord.ordinal.gte(data.ord.base**2)?`Markup and gain ${formatWhole(totalOPGain())} Ordinal Powers (I)`:`${ordinalDisplay("H", data.ord.base**2, 0, data.ord.base, ordinalDisplayTrim(), false)}(${data.ord.base}) is required to Markup...`
 
-    DOM("factorShiftButton").innerHTML = data.ord.base===3?(data.boost.times>0||data.collapse.hasSluggish[0])&&(!data.base2)?`Perform a Factor Shift<br>Requires: ?????`:`Perform a Factor Shift<br>Requires: Graham's Number (${ordinalDisplay("H", 109, 0, 3, data.ord.trim, true, true)}(3))`:
+    DOM("factorShiftButton").innerHTML = data.ord.base===3&&!data.omegaMode?(data.boost.times>0||data.collapse.hasSluggish[0])&&(!data.base2)?`Perform a Factor Shift<br>Requires: ?????`:`Perform a Factor Shift<br>Requires: Graham's Number (${ordinalDisplay("H", 109, 0, 3, data.ord.trim, true, true)}(3))`:
         `Perform a Factor Shift (H)<br>Requires: ${format(getFSReq())} Ordinal Powers`
     DOM("auto0").innerText = `Successor AutoClicker\nCosts ${format(autoCost(0))} Ordinal Powers`
     DOM("auto1").innerText = `Maximize AutoClicker\nCosts ${format(autoCost(1))} Ordinal Powers`
@@ -99,7 +99,7 @@ function calcOrdPoints(ord = data.ord.ordinal, base = data.ord.base, over = data
 }
 const fsReqs = [200, 1000, 1e4, 3.5e5, 1e12, 1e21, 5e100, 1e256, Infinity]
 function getFSReq(){
-    if (data.markup.shifts >= (data.base2 ? 8 : 7)) return Infinity // avoid phantom 1e256 on FS7
+    if (data.markup.shifts >= (data.base2 ? 8 : 7)) return Infinity // avoid phantom 1e256 on FS7/FS8
     const reqScale = data.chal.active[6] ? (totalBUPs()/2)+1.5 : 1
     const req = fsReqs[data.markup.shifts]**reqScale
 
@@ -123,7 +123,7 @@ function factorShift(isAuto = false){
 
     const req = getFSReq()
 
-    if (data.markup.shifts === 7 && data.ord.base === 3) {
+    if (data.markup.shifts === 7 && data.ord.base === 3 && !data.omegaMode) {
         if(!data.ord.isPsi || data.ord.ordinal.lt(GRAHAMS_VALUE) || !data.base2) return //createAlert("Failure", "Insufficient Ordinal", "Dang.")
     }
     if(data.markup.powers < req) return //createAlert("Failure", "Insufficient Ordinal Powers", "Dang.")
