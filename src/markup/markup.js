@@ -85,7 +85,7 @@ function calcOrdPoints(ord = data.ord.ordinal, base = data.ord.base, over = data
     if (trim >= 10) return new Decimal(0)
     if (Decimal.lt(ord, base)) {
         return Decimal.add(ord, over)
-    } else if (new Decimal(ord).slog(base).lt(base) || true) {
+    } else if (new Decimal(ord).slog(base).lt(base) || data.omegaMode) {
         let powerOfOmega = Decimal.log(new Decimal(ord).add(0.1), base).floor()
         let highestPower = Decimal.pow(base,powerOfOmega)
         let powerMultiplier = Decimal.floor(Decimal.div(new Decimal(ord).add(0.1),highestPower))
@@ -94,9 +94,9 @@ function calcOrdPoints(ord = data.ord.ordinal, base = data.ord.base, over = data
         return new Decimal(opBase).tetrate(calcOrdPoints(new Decimal(ord).slog(base),base,0,trim))
     }
 }
-const fsReqs = [200, 1000, 1e4, 3.5e5, 1e12, 1e21, 5e100, Infinity, Infinity]
+const fsReqs = [200, 1000, 1e4, 3.5e5, 1e12, 1e21, 5e100, 1e256, Infinity]
 function getFSReq(){
-    if (data.markup.shifts >= 7) return Infinity // avoid phantom 1e256 on FS7
+    if (data.markup.shifts >= (data.base2 ? 8 : 7)) return Infinity // avoid phantom 1e256 on FS7
     const reqScale = data.chal.active[6] ? (totalBUPs()/2)+1.5 : 1
     const req = fsReqs[data.markup.shifts]**reqScale
 
