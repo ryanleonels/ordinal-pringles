@@ -341,6 +341,37 @@ function psiHardy(ord, base) {
     if (ord.toString() === "NaNeNaN") return "NEVER"; // NEVER
     if (ord.toString() === "NaNeInfinity") return "Ω"; // Absolute Infinity
 
+    if (base === 2) { // psi base 2 - in reverse order, individual values are only available up to omega fixed point (per-level value above that point) - bottom values are 3 instead of 2 as arrays with 2,2 as starting values are degenerate
+        if (D(ord.layer).gte(D("3.2317006071311436e616"))) return "s(2,3{1,,1,,1,2}2)"; // ψ(I_ω) level
+        if (ord.gte(D("ee79.36560556844312"))) return "s(2,3{1,,1,2,,2}2)"; // ψ(Ω_(I+ω)) level (highest level reachable below 10^^Number.MAX_VALUE)
+        if (ord.gte(2**297)) return "s(2,3{1,,2,,2}2)"; // ψ(Ω_(I+1)) level (using Strong Array Notation until Iω) (highest level reachable below Number.MAX_VALUE)
+        if (ord.gte(2**164)) return "s(2,3{1{1,,1{2,,1,,2}2}2,,1,,2}2)"; // ψ(I^(ψI(I^ω))) level
+        if (ord.gte(4194304)) return "s(2,3{2,,1,,2}2)"; // ψ(I^ω) level
+        if (ord.gte(2097152)) return "s(2,3{1,,1,,2}1{1,,1{1,,1,,2}1{1,,1,2}2}2)"; // ψ(I.ψI(I.Ω_ω)) level
+        if (ord.gte(8192)) return "s(2,3{1,,1,,2}1{1,,1{1,,1,,2}2}2)"; // ψ(I.ψI(I)) level
+        if (ord.gte(4096)) return "s(2,3{1,,1,,2}1{1,,1,2}2)"; // ψ(I.Ω_ω) level
+        if (ord.gte(32)) return "s(2,3{1,,1,,2}1`2)"; // ψ(IΩ) level
+        if (ord.gte(17)) return "s(2,3{1,,1,,2}1,2)"; // ψ(Iω) level (last level using Strong Array Notation)
+        if (ord.gte(16)) return "{2,3[1[2/<sub>1/2</sub>2]2]2}"; // θ(Ω_Ω) = omega fixed point (limit of Bird's Array Notation)
+        if (ord.gte(15)) return "{2,3[1[2/<sub>1[1[1~3]2]2</sub>2]2]2}"; // θ(Ω_Γ0)
+        if (ord.gte(14)) return "{2,3[1[2/<sub>1[1[1[2~2]2~2]2]2</sub>2]2]2}"; // θ(Ω_φ(φ(ω, 0), 0))
+        if (ord.gte(13)) return "{2,3[1[2/<sub>1[1[1/2~2]2]2</sub>2]2]2}"; // θ(Ω_φ(εω, 0))
+        if (ord.gte(12)) return "{2,3[1[2/<sub>1[1[1,2~2]2]2</sub>2]2]2}"; // θ(Ω_φ(ε0, 0))
+        if (ord.gte(11)) return "{2,3[1[2/<sub>1[1[2~2]2]2</sub>2]2]2}"; // θ(Ω_φ(ω, 0))
+        if (ord.gte(10)) return "{2,3[1[2/<sub>1[1/1,2]2</sub>2]2]2}"; // θ(Ω_εω)
+        if (ord.gte(9)) return "{2,3[1[2/<sub>1[1/2]2</sub>2]2]2}"; // θ(Ω_ε0)
+        if (ord.gte(8)) return "{2,3[1[1~3]2]2}"; // Γ0 = BHO base 2
+        if (ord.gte(7)) return "{2,3[1[1[2~2]2~2]2]2}"; // φ(φ(ω, 0), 0)
+        if (ord.gte(6)) return "{2,3[1[1/2~2]2]2}"; // φ(εω, 0)
+        if (ord.gte(5)) return "{2,3[1[1,2~2]2]2}"; // φ(ε0, 0)
+        if (ord.gte(4)) return "{2,3[1[2~2]2]2}"; // φ(ω, 0)
+        if (ord.gte(3)) return "{2,3[1/1,2]2}"; // εω
+        if (ord.gte(2)) return "8.00"; // ε0 base 2
+        if (ord.gte(1)) return "4.00"; // Hω(2)
+        if (ord.gte(0)) return "3.00"; // H1(2)
+        return "2.00"; // H0(2)
+    }
+
     // psi base 3+ - ultra-simplified (1 value per ordinal level), in reverse order (value represents the highest ordinal level at or below current ordinal)
     if (!capOrdinalAtBO && D(ord.layer).gte(Decimal.tetrate(PSI_VALUE,3).mul(2).sub(3).add(D(ord.mag).gte(D(BO_VALUE).mag)?0:1))) return "{3,3[1[2/<sub>1//2</sub>2]2]2}"; // OFP = I
     if (!capOrdinalAtBO && D(ord.layer).gte((PSI_VALUE*2)-3+(D(ord.mag).gte(D(BO_VALUE).mag)?0:1))) return "{3,3[1[2/<sub>1~2</sub>2]2]2}"; // Ω_Ω₂

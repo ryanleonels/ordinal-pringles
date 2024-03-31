@@ -78,6 +78,7 @@ function displayHugeYSeqOrd(ord, over, base, trim = data.ord.trim) {
 
 // Displays Ordinals using Y-Sequence when the value of ord is less than NUMBER.MAX_VALUE
 function displayYSeqOrd(ord, over, base, trim = data.ord.trim, depth = 0, final = true, forcePsi = false) {
+    if ((data.ord.isPsi || forcePsi) && base === 2) return displayBase2YSeqOrd(ord, trim)
     if ((data.ord.isPsi || forcePsi) && D(ord).gte(BO_VALUE)) return displayHugeYSeqOrd(ord, over, base, trim)
     let BMSOutput = trimBMSFinalOutput(displayBMSOrd(ord, over, base, trim, depth, final, forcePsi), trim)
     if ((data.ord.isPsi || forcePsi) && D(ord).toNumber() >= 0 && D(ord).toNumber() < 4) return ["(1)","(1,2)","(1,2,3)","(1,2,3,3)"][Math.floor(D(ord).toNumber())]
@@ -88,4 +89,48 @@ function displayYSeqOrd(ord, over, base, trim = data.ord.trim, depth = 0, final 
 function displayInfiniteYSeqOrd(ord, over, base, trim = data.ord.trim, depth = 0, final = true, recursionDepth = 0){
     let BMSOutput = trimBMSFinalOutput(displayInfiniteBMSOrd(ord, over, base, trim, depth, final, recursionDepth), trim)
     return D(ord).gte(1) ? BMS1RowToYSeq(BMSOutput, trim) : "()"
+}
+
+// Displays Ordinals using Y-Sequence for base 2 psi ordinals
+function displayBase2YSeqOrd(ord, trim = data.ord.trim) {
+    if(D(ord).lt(0)) return "()"
+    if(D(ord).mag === Infinity || isNaN(D(ord).mag)) return "Ω"
+    if (trim <= 0) return "(...)"
+    ord = D(Decimal.floor(D(ord).add(0.000000000001)))
+    // Y-sequence from 3-row BMS is too complicated, simply return 1 value per ordinal level (much like Hardy) - otherwise lower levels can simply be enumerated
+    let YSeq = "(1)"; // 1
+    if (ord.gte(1)) YSeq = "(1,2)"; // ω
+    if (ord.gte(2)) YSeq = "(1,2,4)"; // ψ(Ω)
+    if (ord.gte(3)) YSeq = "(1,2,4,5)"; // ψ(Ωω)
+    if (ord.gte(4)) YSeq = "(1,2,4,6,7)"; // ψ(Ω^ω)
+    if (ord.gte(5)) YSeq = "(1,2,4,6,7,9)"; // ψ(Ω^ψ(Ω))
+    if (ord.gte(6)) YSeq = "(1,2,4,6,7,9,10)"; // ψ(Ω^ψ(Ωω))
+    if (ord.gte(7)) YSeq = "(1,2,4,6,7,9,11,12)"; // ψ(Ω^ψ(Ω^ω))
+    if (ord.gte(8)) YSeq = "(1,2,4,8)"; // ψ(Ω_ω)
+    if (ord.gte(9)) YSeq = "(1,2,4,8,12,13,15)"; // ψ(Ω_ψ(Ωω))
+    if (ord.gte(10)) YSeq = "(1,2,4,8,12,13,15,16)"; // ψ(Ω_ψ(Ωω))
+    if (ord.gte(11)) YSeq = "(1,2,4,8,12,13,15,17,18)"; // ψ(Ω_ψ(Ω^ω))
+    if (ord.gte(12)) YSeq = "(1,2,4,8,12,13,15,17,18,20)"; // ψ(Ω_ψ(Ω^ψ(Ω)))
+    if (ord.gte(13)) YSeq = "(1,2,4,8,12,13,15,17,18,20,21)"; // ψ(Ω_ψ(Ω^ψ(Ωω)))
+    if (ord.gte(14)) YSeq = "(1,2,4,8,12,13,15,17,18,20,22,23)"; // ψ(Ω_ψ(Ω^ψ(Ω^ω)))
+    if (ord.gte(15)) YSeq = "(1,2,4,8,12,13,15,19)"; // ψ(Ω_ψ(Ω_ω))
+    if (ord.gte(16)) YSeq = "(1,2,4,8,12,15,9)"; // ψ(I)
+    if (ord.gte(17)) YSeq = "(1,2,4,8,12,15,12)"; // ψ(Iω) level
+    if (ord.gte(32)) YSeq = "(1,2,4,8,12,15,12,14)"; // ψ(IΩ) level
+    if (ord.gte(4096)) YSeq = "(1,2,4,8,12,15,12,15,8)"; // ψ(I.Ω_ω) level
+    if (ord.gte(8192)) YSeq = "(1,2,4,8,12,15,12,15,8,12,15,9)"; // ψ(I.ψI(I)) level
+    if (ord.gte(2097152)) YSeq = "(1,2,4,8,12,15,12,15,8,12,15,12,15,8)"; // ψ(I.ψI(I.Ω_ω)) level
+    if (ord.gte(4194304)) YSeq = "(1,2,4,8,12,15,13)"; // ψ(I^ω) level
+    if (ord.gte(2**164)) YSeq = "(1,2,4,8,12,15,15,8,12,15,13)"; // ψ(I^(ψI(I^ω))) level
+    if (ord.gte(2**297)) YSeq = "(1,2,4,8,12,15,19)"; // ψ(Ω_(I+1)) level
+    if (ord.gte(D("ee79.36560556844312"))) YSeq = "(1,2,4,8,12,15,20)"; // ψ(Ω_(I+ω)) level
+    if (D(ord.layer).gte(D("3.2317006071311436e616"))) YSeq = "(1,2,4,8,12,16)"; // ψ(I_ω) level
+    let trimmed = false
+    let outputList = YSeq.slice(1,-1).split(",")
+    let n = outputList.length
+    if (n > trim) {
+        trimmed = true
+        outputList.length = trim
+    }
+    return "(" + outputList.toString()+ (trimmed ? ",...)" : ")")
 }
