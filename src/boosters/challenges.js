@@ -91,7 +91,7 @@ function chalExitConfirm(){
 }
 function chalComplete(){
     if(data.chal.html === -1 || data.darkness.darkened) return
-    const currency = data.chal.html===1?data.ord.ordinal:data.markup.powers
+    const currency = data.chal.html===1?Math.min(data.ord.ordinal,Number.MAX_VALUE):data.markup.powers
     const ex = data.chal.html===1?data.ord.isPsi:true
     if(currency>=chalGoals[data.chal.html][data.chal.completions[data.chal.html]] && ex){
         ++data.chal.completions[data.chal.html]
