@@ -51,8 +51,9 @@ function buyFactor(n){
 function buyMaxFactor(){
     if(data.chal.active[1]) return
     if(data.ord.isPsi) {
-        if (data.ord.base >= 3) return data.factors = [9,8,7,7,6,6,6]
-        if (data.ord.base <= 2) return data.factors = [9,8,7,7,6,6,6,6]
+        let maxFactors = [9,8,7,7,6,6,6,6]
+        for (let i = 0; i < data.markup.shifts; i++) data.factors[i] = maxFactors[i]
+        return
     }
     if(data.baseless.baseless){
         for (let i = data.baseless.shifts-1; i >= 0; i--){
@@ -106,13 +107,24 @@ function calcDyGain(){
     return Math.min(D(data.dy.gain).mul(boost).mul(iup2Effect()).mul(dynamicShiftMultipliers[1]()).mul(chargeBoost).div(ao2).toNumber(), Number.MAX_VALUE)
 }
 
-function addFactor(n){
-    if (data.factors.length <= n) data.factors[n] = 0
-    let button = document.createElement('button');
-    button.setAttribute("class", "factor");
-    button.setAttribute("id", `factor${n}`);
-    button.setAttribute("onclick", `buyFactor(${n})`);
-    let text = document.createTextNode(`Factor ${n}`);
-    button.appendChild(text);
-    DOM("factorSubPage").appendChild(button);
+function addFactor8(){
+    if (data.factors.length <= 7) data.factors[7] = 0
+    var factor8 = document.getElementById("factor7");
+    if (!factor8) {
+        let button = document.createElement('button');
+        button.setAttribute("class", "factor");
+        button.setAttribute("id", `factor7`);
+        button.setAttribute("onclick", `buyFactor(7)`);
+        let text = document.createTextNode(`Factor 8`);
+        button.appendChild(text);
+        DOM("factorSubPage").appendChild(button);
+    } else {
+        factor8.style.display = "";
+    }
+}
+
+function removeFactor8(){
+    data.factors.length = 7
+    var factor8 = document.getElementById("factor7");
+    factor8.style.display = "none";
 }

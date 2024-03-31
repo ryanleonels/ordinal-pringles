@@ -53,15 +53,40 @@ function toggleOrdDisplay(){
 function toggleBase2(){
     data.base2 = !data.base2
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
-    if (data.base2) addFactor(8)
+    if (data.base2) addFactor8()
+    if (!data.base2) {
+        removeFactor8()
+        if (data.markup.shifts === 8) {
+            data.markup.shifts = 7
+            if (data.boost.hasBUP[2] && checkAllIndexes(data.chal.active, true)) {
+                data.ord.base = bup2Effect()
+            } else {
+                data.ord.base = (data.chal.active[2]?15:10) - (data.chal.active[3]?0:data.markup.shifts)
+            }
+            fsReset()
+        }
+        if (data.baseless.shifts === 8) {
+            data.baseless.shifts = 7
+            data.ord.base /= 2
+            fsReset()
+        }
+    }
     return save()
 }
 
 function toggleOmegaMode(){
     data.omegaMode = !data.omegaMode
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
-    if (data.omegaMode && data.ord.isPsi) data.ord.isPsi = false
-    if (!data.omegaMode && data.ord.ordinal.gte(PSI_VALUE) && data.ord.base === 3) data.ord.isPsi = true
+    if (data.omegaMode && data.ord.isPsi) {
+        data.ord.isPsi = false
+        data.ord.ordinal = (data.ord.base === 2 ? D(4) : D(PSI_VALUE));
+        fsReset()
+    }
+    if (!data.omegaMode && ((data.ord.base === 3 && data.ord.ordinal.gte(PSI_VALUE)) || (data.ord.base === 2 && data.ord.ordinal.gte(4)))) {
+        data.ord.isPsi = true
+        data.ord.ordinal = (data.ord.base === 2 ? D(2) : D(4));
+        fsReset()
+    }
     return save()
 }
 

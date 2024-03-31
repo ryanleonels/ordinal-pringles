@@ -1,5 +1,8 @@
 let extraT1 = () => data.collapse.hasSluggish[0] ? 1 : 0
 function updateMarkupHTML(){
+    var factor8 = document.getElementById('factor7');
+    if (data.base2 && !factor8) addFactor8();
+
     DOM("powersText").innerText = `You have ${formatWhole(data.markup.powers)} Ordinal Powers`
 
     DOM("markupButton").innerHTML =
@@ -7,7 +10,7 @@ function updateMarkupHTML(){
         data.ord.isPsi?`Markup and gain ${ordinalDisplay('', data.ord.ordinal.plus(1), data.ord.over, data.ord.base, ((data.ord.displayType === "BMS") || (data.ord.displayType === "Y-Sequence")) ? Math.max(data.ord.trim, 4) : 4)} (I)`:
         data.ord.ordinal.gte(data.ord.base**2)?`Markup and gain ${formatWhole(totalOPGain())} Ordinal Powers (I)`:`${ordinalDisplay("H", data.ord.base**2, 0, data.ord.base, ordinalDisplayTrim(), false)}(${data.ord.base}) is required to Markup...`
 
-    DOM("factorShiftButton").innerHTML = data.ord.base===3?data.boost.times>0||data.collapse.hasSluggish[0]?`Perform a Factor Shift<br>Requires: ?????`:`Perform a Factor Shift<br>Requires: Graham's Number (${ordinalDisplay("H", 109, 0, 3, data.ord.trim, true, true)}(3))`:
+    DOM("factorShiftButton").innerHTML = data.ord.base===3?(data.boost.times>0||data.collapse.hasSluggish[0])&&(!data.base2)?`Perform a Factor Shift<br>Requires: ?????`:`Perform a Factor Shift<br>Requires: Graham's Number (${ordinalDisplay("H", 109, 0, 3, data.ord.trim, true, true)}(3))`:
         `Perform a Factor Shift (H)<br>Requires: ${format(getFSReq())} Ordinal Powers`
     DOM("auto0").innerText = `Successor AutoClicker\nCosts ${format(autoCost(0))} Ordinal Powers`
     DOM("auto1").innerText = `Maximize AutoClicker\nCosts ${format(autoCost(1))} Ordinal Powers`
@@ -111,16 +114,21 @@ function factorShiftConfirm(){
 
 function factorShift(isAuto = false){
     if(data.baseless.baseless) return
-    if(data.markup.shifts === 7 && !isAuto){
+    if(data.markup.shifts === 7 && (!isAuto || data.base2)){
         if(data.ord.isPsi && data.ord.ordinal.gte(GRAHAMS_VALUE) && data.boost.times === 0) return boost(true)
-        else return //createAlert("Failure", "Insufficient Ordinal", "Dang.")
+        else {
+            if (!data.base2) return //createAlert("Failure", "Insufficient Ordinal", "Dang.")
+        }
     }
 
     const req = getFSReq()
 
+    if (data.markup.shifts === 7 && data.ord.base === 3) {
+        if(!data.ord.isPsi || data.ord.ordinal.lt(GRAHAMS_VALUE) || !data.base2) return //createAlert("Failure", "Insufficient Ordinal", "Dang.")
+    }
     if(data.markup.powers < req) return //createAlert("Failure", "Insufficient Ordinal Powers", "Dang.")
     if(!data.chal.active[3] && !(data.boost.hasBUP[2] && checkAllIndexes(data.chal.active, true))) --data.ord.base
-    if(data.markup.shifts < 7) ++data.markup.shifts
+    if(data.markup.shifts < 7 + data.base2) ++data.markup.shifts
 
     if(data.markup.shifts === 7 && !data.chal.active[4]){
         data.dy.level = 4
@@ -135,6 +143,7 @@ function factorShift(isAuto = false){
 function fsReset(){
     data.ord.ordinal = D(0)
     data.ord.over = 0
+    data.ord.isPsi = false
     data.markup.powers = 0
     for (let i = 0; i < data.autoLevels.length; i++) {
         data.autoLevels[i] = 0

@@ -26,7 +26,7 @@ function updateDynamicShiftHTML(){
     DOM(`dynamicShift`).style.display = `${data.baseless.baseless ? 'block' : 'none'}`
     DOM(`baselessMultiplierText`).style.display = `${data.baseless.baseless ? 'block' : 'none'}`
     if(data.baseless.baseless){
-        DOM(`dynamicShift`).innerHTML = data.baseless.shifts < 7
+        DOM(`dynamicShift`).innerHTML = data.baseless.shifts < 7 + data.base2
             ? `<span style="font-size: 1rem">Perform a <span style="color: darkred">Dynamic Shift</span> (H)<br>Requires: &omega;<sup>&omega;</sup></span><br>This will unlock Factor ${data.baseless.shifts+1}, perform a Factor Shift reset, multiply your ℵ<sub>0</sub> gain multiplier by ${format(dynamicShiftMultipliers[0](data.baseless.shifts+1))}, multiply your Dynamic gain by ${format(dynamicShiftMultipliers[1](data.baseless.shifts+1))}, and <span style="color: darkred">double your Base</span>`
             : `Perform a <span style="color: darkred; font-size: 1rem"">Dynamic Shift</span><br>The Future Remains Unknown`
         DOM(`baselessMultiplierText`).innerHTML = `Your ℵ<sub>0</sub> gain multiplier is ${format(getBaselessMult(data.baseless.mode)*dynamicShiftMultipliers[0]())}`
@@ -134,7 +134,7 @@ function baselessControl(){
 }
 
 function dynamicShift(){
-    if(data.ord.ordinal.lt(numberFromOrdinal('&omega;<sup>&omega;</sup>', data.ord.base)) || data.baseless.shifts > 6) return
+    if(data.ord.ordinal.lt(numberFromOrdinal('&omega;<sup>&omega;</sup>', data.ord.base)) || data.baseless.shifts > 6 + data.base2) return
     ++data.baseless.shifts
     data.ord.base *= 2
     fsReset()

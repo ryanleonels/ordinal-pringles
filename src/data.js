@@ -44,6 +44,7 @@ function getDefaultObject() {
         gword: {unl: false, enabled: false},
         base2: false,
         omegaMode: false,
+        base2Shift: 1,
     }
 }
 let data = getDefaultObject()
