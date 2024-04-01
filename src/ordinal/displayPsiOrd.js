@@ -56,24 +56,10 @@ function displayBase2PsiOrd(ord, trim = data.ord.trim) {
     if(ord.eq(0)) return ""
     if(ord.lt(2)) return extraOrdMarks2[ord]
     let finalOutput = ""
-    if(ord.lt(D("ee79.36560556844312"))) {
-        const magnitude = Decimal.floor(Decimal.ln(ord.div(2)).div(Decimal.ln(2)))
-        const magnitudeAmount = D(2).times(Decimal.pow(2, magnitude))
-        finalOutput = infiniteOrdMarks2X(magnitude) //ordMarks2[Decimal.min(magnitude,ordMarks2.length-1)]
-        if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayBase2PsiOrd(ord.sub(magnitudeAmount), trim-1))
-        if(finalOutput.includes("y"))finalOutput = finalOutput.replace(/y/, displayBase2PsiOrd(ord.sub(magnitudeAmount).plus(1), trim-1))
-    }
-    // placeholders while higher ordinals are being prepared
-    if (ord.eq(D("ee79.36560556844312"))) finalOutput = "&psi;(Ω<sub>I+ω</sub>)"; // ψ(Ω_(I+ω)) level - TODO: refine per omega subscript at this level onwards
-    if (ord.gt(D("ee79.36560556844312"))) finalOutput = "&psi;(Ω<sub>I+Ω</sub>)"; // ψ(Ω_(I+Ω)) level
-    if (ord.gt(D("eee615.9880408921791"))) finalOutput = "&psi;(Ω<sub>I+Ω+1</sub>)"; // ψ(Ω_(I+Ω+1)) level
-    if (ord.eq(D("eeee619.299370844483"))) finalOutput = "&psi;(Ω<sub>I+Ω+ω</sub>)"; // ψ(Ω_(I+Ω+ω)) level
-    if (ord.gt(D("eeee619.299370844483"))) finalOutput = "&psi;(Ω<sub>IΩ</sub>)"; // ψ(Ω_(IΩ)) level
-    if (ord.gte(D("(e^12)619.299370844483"))) finalOutput = "&psi;(Ω<sub>I<sup>Ω</sup></sub>)"; // ψ(Ω_(I^Ω)) level
-    if (ord.gte(D("(e^28)619.299370844483"))) finalOutput = "&psi;(Ω<sub>I<sup>Ω</sup>Ω</sub>)"; // ψ(Ω_((I^Ω)Ω)) level
-    if (ord.gte(D("(e^60)619.299370844483"))) finalOutput = "&psi;(Ω<sub>I<sup>Ω+1</sup></sub>)"; // ψ(Ω_(I^(Ω+1))) level
-    if (ord.gte(D("(e^124)619.299370844483"))) finalOutput = "&psi;(Ω<sub>I<sup>Ω+1</sup>Ω</sub>)"; // ψ(Ω_((I^(Ω+1))Ω)) level
-    if (ord.gte(D("(e^252)619.299370844483"))) finalOutput = "&psi;(Ω<sub>Ω<sub>I+1</sub></sub>)"; // ψ(Ω_(Ω_(I+1))) level
-    if (D(ord.layer).gte(D("3.2317006071311436e616"))) finalOutput = "&psi;(I<sub>ω</sub>)"; // ψ(I_ω) = ψ(Ω_(Ω_(Iω))) level
+    const magnitude = Decimal.floor(Decimal.ln(ord.div(2)).div(Decimal.ln(2)))
+    const magnitudeAmount = D(2).times(Decimal.pow(2, magnitude))
+    finalOutput = infiniteOrdMarks2X(magnitude) //ordMarks2[Decimal.min(magnitude,ordMarks2.length-1)]
+    if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayBase2PsiOrd(ord.sub(magnitudeAmount), trim-1))
+    if(finalOutput.includes("y"))finalOutput = finalOutput.replace(/y/, displayBase2PsiOrd(ord.sub(magnitudeAmount).plus(1), trim-1))
     return `${finalOutput.replaceAll('undefined', '')}`
 }
