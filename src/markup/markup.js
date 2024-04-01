@@ -59,7 +59,7 @@ function markup(n=D(1)){
     data.ord.isPsi = false
     data.markup.powers += totalOPGain()
     data.ord.ordinal = D(0)
-    data.ord.over = 0
+    data.ord.over = D(0)
     data.successorClicks = 0
 }
 function opMult(){
@@ -76,7 +76,7 @@ function opGain(ord = data.ord.ordinal, base = data.ord.base, over = data.ord.ov
     //if(data.ord.isPsi && base === 3){
     //    return Math.round(ord / 1e270 + 1) * 1e270
     //}
-    if (ord < base) return ord + over
+    if (ord < base) return Decimal.add(ord, over).toNumber()
     let pow = Math.floor(Math.log(ord + 0.1) / Math.log(base))
     let divisor = Math.pow(base, pow)
     let mult = Math.floor((ord + 0.1) / divisor)
@@ -142,7 +142,7 @@ function factorShift(isAuto = false){
 
 function fsReset(){
     data.ord.ordinal = D(0)
-    data.ord.over = 0
+    data.ord.over = D(0)
     data.ord.isPsi = false
     data.markup.powers = 0
     for (let i = 0; i < data.autoLevels.length; i++) {
