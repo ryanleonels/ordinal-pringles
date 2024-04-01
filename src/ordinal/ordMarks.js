@@ -146,7 +146,7 @@ function makeExcessOrdMarks(){
 
 // CREDIT TO https://ordinal-pringles-dark-mode.glitch.me/
 
-// An extension of OrdMarks, goes up to FB156,765,267,918,903
+// An extension of ordMarks, goes up to FB9.11585910069733e39
 const ordMarksX = [
     "&psi;(Ω<sub>2</sub>x)",
     "&psi;(Ω<sub>2</sub><sup>2</sup>x)",
