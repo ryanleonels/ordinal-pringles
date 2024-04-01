@@ -3416,7 +3416,8 @@ const ordMarks2X2 = [
     "&psi;(Ω<sub>I<sup>Ω+1</sup>(Ω+1)+I<sup>Ω</sup>(Ω+1)+I(Ω+1)+1</sub>)",
     "&psi;(Ω<sub>I<sup>Ω+1</sup>(Ω+1)+I<sup>Ω</sup>(Ω+1)+I(Ω+1)+Ω</sub>)",
     "&psi;(Ω<sub>I<sup>Ω+1</sup>(Ω+1)+I<sup>Ω</sup>(Ω+1)+I(Ω+1)+Ω+1</sub>)",
-    "&psi;(Ω<sub>Ω<sub>I+1</sub></sub>)",
+    "&psi;(I<sub>ω</sub>)",
+    "&psi;(I<sub>Ω</sub>)",
 ];
 
 const ordMarks2X2Start = [
@@ -3671,6 +3672,7 @@ const ordMarks2X2Start = [
     new Decimal("(e^249)619.299370844483"),
     new Decimal("(e^250)619.299370844483"),
     new Decimal("(e^251)619.299370844483"),
+    new Decimal("(e^252)619.299370844483"),
 ];
 
 // Generates OrdMarks2 above ordMarks2X limit (Ω_(I+ω)) ON DEMAND
@@ -3678,7 +3680,8 @@ function infiniteOrdMarks2X2(magnitude, layer = 0) {
     if (layer >= data.ord.trim) return ""
     magnitude = D(magnitude).add(0.000000000001).floor()
     if (D(magnitude).lt(ordMarks2XStart[ordMarks2X.length - 1])) return infiniteOrdMarks2X(magnitude, layer);
-    if (D(magnitude.layer).gte(D("3.2317006071311436e616"))) return "&psi;(I<sub>ω</sub>)";
+    if (D(magnitude.layer).gte(D("(e^252)619.299370844483"))) return "&psi;(I<sub>Ω+1</sub>)"; // ψ(I_(Ω+1)) level
+    if (D(D(magnitude.layer).layer).gte(D("(e^252)619.299370844483"))) return "&psi;(M)";; // ψ(I_I) = ψ(M) level
     //console.log(magnitude + " " + layer)
     let i = 0
     while (i < ordMarks2X2.length - 1 && magnitude.add(0.000000000001).gte(ordMarks2X2Start[i + 1])) i++

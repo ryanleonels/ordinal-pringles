@@ -114,6 +114,9 @@ function displayBase2PsiVeblenOrd(ord, trim = data.ord.trim) {
     if (ord.gte(16)) veblenOutput = "&phi;(1@(1,0)<sub>I</sub>)"; // ψ(I) level
     if (ord.gte(2**297)) veblenOutput = "&phi;(1@(1,0)<sub>I+1</sub>)"; // ψ(Ω_(I+1)) level
     if (ord.gte(D("ee79.36560556844312"))) veblenOutput = displayBase2PsiOrd(ord, trim).replaceAll("&psi;(Ω", "&phi;(1@(1,0)").replaceAll("Ω<sub>", "1@(1,0)<sub>").replaceAll("Ω", "(1,0)") // ψ(Ω_(I+ω)) level
-    if (D(ord.layer).gte(D("3.2317006071311436e616"))) veblenOutput = "&phi;(1@(1,0)<sub>I<sub>&phi;(1)</sub></sub>)"; // ψ(I_ω) level
+    if (ord.gte(D("(e^252)619.299370844483"))) veblenOutput = "&phi;(1@(1,0)<sub>I<sub>&phi;(1)</sub></sub>)"; // ψ(I_ω) level
+    if (ord.gte(D("(e^253)619.299370844483"))) veblenOutput = "&phi;(1@(1,0)<sub>I<sub>(1,0)</sub></sub>)"; // ψ(I_Ω) level
+    if (D(ord.layer).gte(D("(e^252)619.299370844483"))) veblenOutput = "&phi;(1@(1,0)<sub>I<sub>(1,1)</sub></sub>)"; // ψ(I_(Ω+1)) level
+    if (D(D(ord.layer).layer).gte(D("(e^252)619.299370844483"))) veblenOutput = "&phi;(1@(1,0)<sub>M</sub>)";; // ψ(I_I) = ψ(M) level
     return veblenOutput
 }

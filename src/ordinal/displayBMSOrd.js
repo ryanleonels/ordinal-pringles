@@ -210,6 +210,9 @@ function displayBase2PsiBMSOrd(ord, trim = data.ord.trim) {
     if (ord.gte(2**164)) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,0)(3,1,0)(1,1,1)(2,1,1)(3,1,0)(3,0,0)"; // ψ(I^(ψI(I^ω))) level
     if (ord.gte(2**297)) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,0)(4,2,0)"; // ψ(Ω_(I+1)) level
     if (ord.gte(D("ee79.36560556844312"))) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,0)(4,2,1)"; // ψ(Ω_(I+ω)) level
-    if (D(ord.layer).gte(D("3.2317006071311436e616"))) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,1)"; // ψ(I_ω) level
+    if (ord.gte(D("eeee619.299370844483"))) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,0)(4,2,1)(5,2,1)(6,1,0)(2,0,0)"; // ψ(Ω_(I+I)) level
+    if (ord.gte(D("(e^252)619.299370844483"))) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,1)"; // ψ(I_ω) level
+    if (ord.gte(D("(e^253)619.299370844483"))) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,1)(2,1,1)(3,1,0)"; // ψ(I_Ω) level
+    if (D(D(ord.layer).layer).gte(D("(e^252)619.299370844483"))) bmsOutput = "(0,0,0)(1,1,1)(2,1,1)(3,1,1)(2,1,1)(3,1,0)(2,0,0)"; // ψ(I_I) = ψ(M) level
     return trimBMSFinalOutput(bmsOutput, trim)
 }

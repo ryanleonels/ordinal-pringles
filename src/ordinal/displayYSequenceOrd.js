@@ -124,7 +124,10 @@ function displayBase2YSeqOrd(ord, trim = data.ord.trim) {
     if (ord.gte(2**164)) YSeq = "(1,2,4,8,12,15,15,8,12,15,13)"; // ψ(I^(ψI(I^ω))) level
     if (ord.gte(2**297)) YSeq = "(1,2,4,8,12,15,19)"; // ψ(Ω_(I+1)) level
     if (ord.gte(D("ee79.36560556844312"))) YSeq = "(1,2,4,8,12,15,20)"; // ψ(Ω_(I+ω)) level
-    if (D(ord.layer).gte(D("3.2317006071311436e616"))) YSeq = "(1,2,4,8,12,16)"; // ψ(I_ω) level
+    if (ord.gte(D("eeee619.299370844483"))) YSeq = "(1,2,4,8,12,15,20,25,28,9)"; // ψ(Ω_(I+I)) level
+    if (ord.gte(D("(e^252)619.299370844483"))) YSeq = "(1,2,4,8,12,16)"; // ψ(I_ω) level
+    if (ord.gte(D("(e^253)619.299370844483"))) YSeq = "(1,2,4,8,12,16,12,14)"; // ψ(I_Ω) level
+    if (D(D(ord.layer).layer).gte(D("(e^252)619.299370844483"))) YSeq = "(1,2,4,8,12,16,12,15,9)"; // ψ(I_I) = ψ(M) level
     let trimmed = false
     let outputList = YSeq.slice(1,-1).split(",")
     let n = outputList.length
