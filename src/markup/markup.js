@@ -131,11 +131,11 @@ function factorShift(isAuto = false){
     if(data.markup.shifts < 7 + data.base2) ++data.markup.shifts
 
     if(data.markup.shifts === 7 && !data.chal.active[4]){
-        data.dy.level = 4
-        data.dy.gain = 0.002
+        data.dy.level = D(4)
+        data.dy.gain = D(0.002)
     }
 
-    if(data.chal.active[4]) data.dy.gain = 0.002
+    if(data.chal.active[4]) data.dy.gain = D(0.002)
 
     fsReset()
 }
