@@ -33,49 +33,49 @@ const achievements = [
         id: 16,
         name: "The Ultimate Infinity",
         description: "Reach Ψ(Ω₂)",
-        req: () => data.ord.ordinal.gte(BHO_VALUE)
+        req: () => data.ord.isPsi && data.ord.ordinal.gte(BHO_VALUE)
     },
     {
         id: 21,
         name: "Speedy",
         description: "Purchase Factor 1",
-        req: () => data.factors[0] > 0
+        req: () => data.factors[0].gt(0)
     },
     {
         id: 22,
         name: "Breaking the Speed Limit",
         description: "Purchase Factor 2",
-        req: () => data.factors[1] > 0
+        req: () => data.factors[1].gt(0)
     },
     {
         id: 23,
         name: "The Speed of Sound",
         description: "Purchase Factor 3",
-        req: () => data.factors[2] > 0
+        req: () => data.factors[2].gt(0)
     },
     {
         id: 24,
         name: "The Speed of Light",
         description: "Purchase Factor 4",
-        req: () => data.factors[3] > 0
+        req: () => data.factors[3].gt(0)
     },
     {
         id: 25,
         name: "Physics is a Myth",
         description: "Purchase Factor 5",
-        req: () => data.factors[4] > 0
+        req: () => data.factors[4].gt(0)
     },
     {
         id: 26,
         name: "Infinite Speed",
         description: "Purchase Factor 6",
-        req: () => data.factors[5] > 0
+        req: () => data.factors[5].gt(0)
     },
     {
         id: 27,
         name: "The Speed of Gator",
         description: "Purchase Factor 7",
-        req: () => data.factors[6] > 0
+        req: () => data.factors[6].gt(0)
     },
     {
         id: 31,

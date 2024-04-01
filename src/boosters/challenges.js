@@ -91,7 +91,7 @@ function chalExitConfirm(){
 }
 function chalComplete(){
     if(data.chal.html === -1 || data.darkness.darkened) return
-    const currency = data.chal.html===1?Math.min(data.ord.ordinal,Number.MAX_VALUE):data.markup.powers
+    const currency = data.chal.html===1?Math.min(data.ord.ordinal,Number.MAX_VALUE):Math.min(data.markup.powers,Number.MAX_VALUE)
     const ex = data.chal.html===1?data.ord.isPsi:true
     if(currency>=chalGoals[data.chal.html][data.chal.completions[data.chal.html]] && ex){
         ++data.chal.completions[data.chal.html]
@@ -115,7 +115,7 @@ function chalEffectTotal(){
 }
 function decrementyGain() {
     const exponent = 1+hupData[4].effect()+getANREffect(2)-singEffects[1].effect()
-    const base = D(0.000666).times((D(data.markup.powers+1)).pow(0.2).times(2).pow(exponent))
+    const base = D(0.000666).times((D(data.markup.powers).add(1)).pow(0.2).times(2).pow(exponent))
     const overflow = data.overflow.thirdEffect ? base.div(getOverflowEffect(2)) : base.times(getOverflowEffect(2))
     return (overflow).pow(20) // 20 times per second
 }

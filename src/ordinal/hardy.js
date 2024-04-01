@@ -109,6 +109,11 @@ function EN_fghOmegaPlusOne(base)
 
 function hardy(ord, base, over=0)
 {
+    if (D(ord).gte(Number.MAX_VALUE))
+    {
+        return Infinity;
+    }
+
     ord = EN(ord.toString());
 
     if (ord.gte(base ** (base + 2)))

@@ -5,8 +5,8 @@ function mainLoop() {
     // Used for Offline Progress
     let uDiff = diff/1000
 
-    if(data.dy.gain.gt(0) && data.dy.level.lt(data.dy.cap)) data.dy.level = Decimal.min(data.dy.cap, data.dy.level.add(D(uDiff).mul(dyGain())))
-    if(data.boost.hasBUP[11]) data.markup.powers += bup9Effect()*uDiff
+    if(D(data.dy.gain).gt(0) && D(data.dy.level).lt(data.dy.cap)) data.dy.level = Decimal.min(data.dy.cap, data.dy.level.add(D(uDiff).mul(dyGain())))
+    if(data.boost.hasBUP[11]) data.markup.powers = D(data.markup.powers).add(D(uDiff).mul(bup9Effect()))
 
     if(data.chal.active[7]) data.chal.decrementy = Decimal.max(1, data.chal.decrementy.mul(decrementyGain().pow(uDiff)))
 
@@ -17,7 +17,7 @@ function mainLoop() {
     }
 
     if(data.collapse.hasCUP[7]) data.collapse.cardinals += (data.collapse.bestCardinalsGained/100)*cupEffect(7)*uDiff
-    if(data.collapse.hasSluggish[0] && calculateSimpleHardy().gte(10240) && !data.ord.isPsi && data.markup.powers < 4e256) data.markup.powers += (totalOPGain()/100)*uDiff
+    if(data.collapse.hasSluggish[0] && calculateSimpleHardy().gte(10240) && !data.ord.isPsi && D(data.markup.powers).lt(data.omegaMode ? Decimal.tetrate(Number.MAX_VALUE,Number.MAX_VALUE) : 4e256)) data.markup.powers = D(data.markup.powers).add(D(uDiff).mul(totalOPGain()).div(100))
 
     if(remnantAmt() > 0 && data.omega.alephOmega < remnantAmt()) data.omega.alephOmega += aoGain()*uDiff
     if(data.omega.alephOmega > remnantAmt()) data.omega.alephOmega = remnantAmt()

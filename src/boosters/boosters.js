@@ -174,16 +174,16 @@ function boosterReset(){
     data.ord.over = D(0)
     data.ord.base = data.chal.active[2]?15:10
     data.ord.isPsi = false
-    data.markup.powers = 0
+    data.markup.powers = D(0)
     data.markup.shifts = 0
     data.dy.level = D(1)
     data.dy.gain = D(0)
     data.dy.cap = D(40)
     for (let i = 0; i < data.factors.length; i++) {
-        data.factors[i] = 0
+        data.factors[i] = D(0)
     }
     for (let i = 0; i < data.autoLevels.length; i++) {
-        data.autoLevels[i] = 0
+        data.autoLevels[i] = D(0)
     }
     data.chal.decrementy = D(1)
     data.successorClicks = 0

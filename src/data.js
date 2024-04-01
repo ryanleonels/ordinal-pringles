@@ -19,10 +19,10 @@ function getDefaultObject() {
     return {
         nav: {current:"ord", last:"ord"},
         ord: {ordinal:D(1), over:D(0), base:10, trim: 5, isPsi: false, color:false, displayType: 'Buchholz'},
-        markup: {powers:0, shifts:0},
-        factors: Array(7).fill(0),
+        markup: {powers:D(0), shifts:0},
+        factors: Array(7).fill(D(0)),
         dy: {level:D(1), gain:D(0), cap:D(40)},
-        autoLevels: Array(2).fill(0),
+        autoLevels: Array(2).fill(D(0)),
         boost: {amt:0, total:0, times:0, bottomRowCharges:0, hasBUP:Array(15).fill(false), isCharged:Array(15).fill(false), unlocks: Array(5).fill(false)},
         chal: {decrementy: D(1), html: -1, completions: Array(8).fill(0), active: Array(8).fill(false), totalCompletions: 0},
         incrementy: {amt:D(0), hasIUP:Array(12).fill(false), rebuyableAmt: Array(6).fill(0), charge:0, totalCharge:0},
@@ -94,6 +94,13 @@ function fixOldSaves(){
     if(Number.isNaN(data.ord.ordinal.toNumber())) data.ord.ordinal = D(0)
     data.incrementy.amt = D(data.incrementy.amt)
     data.ord.ordinal = D(data.ord.ordinal)
+    data.ord.over = D(data.ord.over)
+    data.dy.level = D(data.dy.level)
+    data.dy.gain = D(data.dy.gain)
+    data.dy.cap = D(data.dy.cap)
+    data.markup.powers = D(data.markup.powers)
+    for (let i = 0; i < data.factors.length; i++) data.factors[i] = D(data.factors[i])
+    for (let i = 0; i < data.autoLevels.length; i++) data.autoLevels[i] = D(data.autoLevels[i])
 
     //AutoShift Fix
     if(data.markup.shifts > 7 + data.base2) data.markup.shifts = 7 + data.base2
@@ -159,9 +166,9 @@ function fixOldSaves(){
         }
     }
     //Old
-    if(data.markup.shifts === 7 && data.dy.level === 1){
-        data.dy.level = 4
-        data.dy.gain = 0.002
+    if(data.markup.shifts === 7 && data.dy.level.eq(1)){
+        data.dy.level = D(4)
+        data.dy.gain = D(0.002)
     }
     if(data.dy.level.gt(data.dy.cap)) data.dy.level = data.dy.cap
     if(data.ord.isPsi && data.ord.ordinal.gt(GRAHAMS_VALUE) && data.boost.times === 0 && !data.collapse.hasSluggish[0]) data.ord.ordinal = D(GRAHAMS_VALUE)

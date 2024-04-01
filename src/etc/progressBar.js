@@ -44,11 +44,11 @@ function getTargetOrdinal() {
         let chalGoal = chalGoals[data.chal.html][data.chal.completions[data.chal.html]]
         if (chalGoal !== Infinity) {
             if (data.chal.html===1) {
-                if (!data.chal.completions[data.chal.html]) chalGoal = 4e256
+                if (!data.chal.completions[data.chal.html]) chalGoal = D(4e256)
                 else return D(chalGoal)
             }
-            let currentOP = (data.chal.html === 7 || data.darkness.darkened) ? 0 : data.markup.powers;
-            return D(OPtoOrd((chalGoal - currentOP) / opMult(), data.ord.base))
+            let currentOP = (data.chal.html === 7 || data.darkness.darkened) ? D(0) : D(data.markup.powers);
+            return D(OPtoOrd(D(chalGoal).sub(currentOP).div(opMult()), data.ord.base))
         }
     }
 
@@ -58,7 +58,7 @@ function getTargetOrdinal() {
 function getBarPercent(){
     if((!data.ord.isPsi) && !inNonPsiChallenge()) return D(0)
     if (data.ord.isPsi && inNonPsiChallenge()) return D(100)
-    if(data.ord.ordinal.div(getTargetOrdinal()).times(100).gte(100)) return 100
+    if(data.ord.ordinal.div(getTargetOrdinal()).times(100).gte(100)) return D(100)
     return Decimal.min(D(100), data.ord.ordinal.div(getTargetOrdinal()).times(100))
 }
 function getTimeEstimate(){
@@ -66,7 +66,7 @@ function getTimeEstimate(){
     if (data.ord.isPsi && inNonPsiChallenge()) return "0s"
 
     if(getTargetOrdinal().lt(data.ord.ordinal))return "0s"
-    let autoSpeed = Decimal.max(1, (data.ord.isPsi ? t2Auto() : D(data.autoLevels[0]+extraT1()*t1Auto()*(data.chal.active[4] ? (1/data.dy.level) : data.dy.level)).div(data.chal.decrementy)))
+    let autoSpeed = Decimal.max(1, (data.ord.isPsi ? t2Auto() : D(data.autoLevels[0]).add(D(extraT1()).mul(t1Auto()).mul(data.chal.active[4] ? Decimal.div(1, data.dy.level) : data.dy.level)).div(data.chal.decrementy)))
     if (!data.ord.isPsi) {
         let succSpeed = !data.chal.active[4]
             ? D(data.autoLevels[0]).add(extraT1()).mul(t1Auto()).mul(data.dy.level).div(data.chal.decrementy)

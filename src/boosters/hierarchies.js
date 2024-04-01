@@ -141,6 +141,7 @@ function increaseHierarchies(diff){
             data.hierarchies.ords[i].over = 0
         }
 
+        if (isNaN(data.hierarchies.ords[i].ord)) data.hierarchies.ords[i].ord = 0
         if (data.hierarchies.ords[i].ord === Infinity) data.hierarchies.ords[i].ord = Number.MAX_VALUE
     }
 }
