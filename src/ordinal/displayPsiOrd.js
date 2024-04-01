@@ -56,16 +56,15 @@ function displayBase2PsiOrd(ord, trim = data.ord.trim) {
     if(ord.eq(0)) return ""
     if(ord.lt(2)) return extraOrdMarks2[ord]
     let finalOutput = ""
-    if(ord.lt(2**297)) {
+    if(ord.lt(D("ee79.36560556844312"))) {
         const magnitude = Decimal.floor(Decimal.ln(ord.div(2)).div(Decimal.ln(2)))
         const magnitudeAmount = D(2).times(Decimal.pow(2, magnitude))
-        finalOutput = ordMarks2[Decimal.min(magnitude,ordMarks2.length-1)]
+        finalOutput = infiniteOrdMarks2X(magnitude) //ordMarks2[Decimal.min(magnitude,ordMarks2.length-1)]
         if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayBase2PsiOrd(ord.sub(magnitudeAmount), trim-1))
         if(finalOutput.includes("y"))finalOutput = finalOutput.replace(/y/, displayBase2PsiOrd(ord.sub(magnitudeAmount).plus(1), trim-1))
     }
     // placeholders while higher ordinals are being prepared
-    if (ord.gte(2**297)) finalOutput = "&psi;(Ω<sub>I+1</sub>)"; // ψ(Ω_(I+1)) level - TODO: create ordMarks2X for detailed ordMarks (full detail) at this level
-    if (ord.eq(D("ee79.36560556844312"))) finalOutput = "&psi;(Ω<sub>I+ω</sub>)"; // ψ(Ω_(I+ω)) level - TODO: refine per omega subscript at this level
+    if (ord.eq(D("ee79.36560556844312"))) finalOutput = "&psi;(Ω<sub>I+ω</sub>)"; // ψ(Ω_(I+ω)) level - TODO: refine per omega subscript at this level onwards
     if (ord.gt(D("ee79.36560556844312"))) finalOutput = "&psi;(Ω<sub>I+Ω</sub>)"; // ψ(Ω_(I+Ω)) level
     if (ord.gt(D("eee615.9880408921791"))) finalOutput = "&psi;(Ω<sub>I+Ω+1</sub>)"; // ψ(Ω_(I+Ω+1)) level
     if (ord.eq(D("eeee619.299370844483"))) finalOutput = "&psi;(Ω<sub>I+Ω+ω</sub>)"; // ψ(Ω_(I+Ω+ω)) level
