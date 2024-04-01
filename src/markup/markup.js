@@ -137,7 +137,7 @@ function factorShift(isAuto = false){
         if(!data.ord.isPsi || data.ord.ordinal.lt(GRAHAMS_VALUE) || !data.base2) return //createAlert("Failure", "Insufficient Ordinal", "Dang.")
     }
     if(D(data.markup.powers).lt(req)) return //createAlert("Failure", "Insufficient Ordinal Powers", "Dang.")
-    if(!data.chal.active[3] && !(data.boost.hasBUP[2] && checkAllIndexes(data.chal.active, true)) && (data.ord.base > (3 - data.base2)) --data.ord.base
+    if(!data.chal.active[3] && !(data.boost.hasBUP[2] && checkAllIndexes(data.chal.active, true)) && (data.ord.base > (3 - data.base2))) --data.ord.base
     if(data.markup.shifts < 7 + data.base2) ++data.markup.shifts
 
     if(data.markup.shifts === 7 && !data.chal.active[4]){
