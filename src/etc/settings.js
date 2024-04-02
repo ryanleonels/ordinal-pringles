@@ -91,6 +91,27 @@ function toggleBase2Shift(){
     changeBase2ShiftDisplayHTML()
 }
 
+function toggleDynamicAlwaysOn(){
+    data.dynamicAlwaysOn = !data.dynamicAlwaysOn
+    if (data.dynamicAlwaysOn && data.markup.shifts < 7 && !data.chal.active[4]) {
+        data.dy.level = D(4)
+        data.dy.gain = D(0.002)
+        DOM('dynamicTab').addEventListener('click', _=> switchSubtab('dynamic', 'markup'))
+    }
+    if (!data.dynamicAlwaysOn && data.markup.shifts < 7 && !data.chal.active[4]) {
+        data.dy.level = D(1)
+        data.dy.gain = D(0)
+    }
+    DOM(`dynamicAlwaysOnToggle`).innerHTML = `Toggle Dynamic Factor in FS0-6 ${settingsColor(data.dynamicAlwaysOn)}`
+    return save()
+}
+
+function toggleIncrementyInChal(){
+    data.incrementyInChal = !data.incrementyInChal
+    DOM(`incrementyInChalToggle`).innerHTML = `Toggle Incrementy Gain in Challenges ${settingsColor(data.incrementyInChal)}`
+    return save()
+}
+
 function toggleOmegaMode(){
     data.omegaMode = !data.omegaMode
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
@@ -115,6 +136,8 @@ function loadSettings(){
     DOM(`offlineProgressToggle`).innerHTML = `Toggle Offline Progress ${settingsColor(data.offline)}`
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
     changeBase2ShiftDisplayHTML()
+    DOM(`dynamicAlwaysOnToggle`).innerHTML = `Toggle Dynamic Factor in FS0-6 ${settingsColor(data.dynamicAlwaysOn)}`
+    DOM(`incrementyInChalToggle`).innerHTML = `Toggle Incrementy Gain in Challenges ${settingsColor(data.incrementyInChal)}`
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
     DOM(`x1000Toggle`).innerHTML = `Toggle x1000 Gameplay Speed ${settingsColor(data.x1000)}`
     DOM(`changeOrdLength`).children[0].innerHTML = `[${data.ord.trim}]`

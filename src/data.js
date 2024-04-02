@@ -43,8 +43,10 @@ function getDefaultObject() {
         offline: true,
         gword: {unl: false, enabled: false},
         base2: false,
-        omegaMode: false,
         base2Shift: 1,
+        dynamicAlwaysOn: false,
+        incrementyInChal: false,
+        omegaMode: false,
         x1000: false,
     }
 }

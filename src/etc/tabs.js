@@ -109,7 +109,7 @@ function switchSubtab(t, mode){
 
 function isTabUnlocked(t){
     switch (t) {
-        case 'dynamic': return data.markup.shifts >= 7 || data.chal.active[4] || data.baseless.baseless
+        case 'dynamic': return data.markup.shifts >= (data.dynamicAlwaysOn ? 0 : 7) || data.chal.active[4] || data.baseless.baseless
 
         case 'chal': return data.boost.unlocks[0]
         case 'incrementy': return data.boost.unlocks[1]
