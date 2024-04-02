@@ -6,7 +6,7 @@ function updateMarkupHTML(){
     DOM("powersText").innerText = `You have ${formatWhole(data.markup.powers)} Ordinal Powers`
 
     DOM("markupButton").innerHTML =
-        data.ord.isPsi&&data.ord.ordinal.eq(GRAHAMS_VALUE)&&data.boost.times===0&&!data.collapse.hasSluggish[0]?`Base 2 is required to go further...`:
+        data.ord.isPsi&&data.ord.ordinal.eq(GRAHAMS_VALUE)&&data.boost.times===0&&!data.collapse.hasSluggish[0]&&data.ord.base>=3?`Base 2 is required to go further...`:
         data.ord.isPsi?`Markup and gain ${ordinalDisplay('', data.ord.ordinal.plus(1), data.ord.over, data.ord.base, ((data.ord.displayType === "BMS") || (data.ord.displayType === "Y-Sequence")) ? Math.max(data.ord.trim, 4) : 4)} (I)`:
         data.ord.ordinal.gte(data.ord.base**2)?`Markup and gain ${formatWhole(totalOPGain())} Ordinal Powers (I)`:`${ordinalDisplay("H", data.ord.base**2, 0, data.ord.base, ordinalDisplayTrim(), false)}(${data.ord.base}) is required to Markup...`
 
@@ -50,7 +50,7 @@ function boostName(){
     return purificationData[data.omega.whichPurification].alt
 }
 function markup(n=D(1)){
-    if(data.boost.times===0 && data.ord.isPsi && data.ord.ordinal.eq(GRAHAMS_VALUE) && !data.collapse.hasSluggish[0]) return
+    if(data.boost.times===0 && data.ord.isPsi && data.ord.ordinal.eq(GRAHAMS_VALUE) && !data.collapse.hasSluggish[0] && data.ord.base>=3) return
     if(data.ord.ordinal.lt(data.ord.base**2) && !data.ord.isPsi) return
     if(data.ord.isPsi){
         data.ord.ordinal = data.ord.ordinal.plus(n);
