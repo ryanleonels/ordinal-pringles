@@ -101,6 +101,7 @@ function updateTotalAlephHTML(){
     if(data.collapse.hasCUP[7]) {
         DOM(`alephTotal`).innerHTML += `<br>Most Cardinals collapsed at once: <span style='color: #20da45'><b>${format(data.collapse.bestCardinalsGained)}</b></span>, providing a constant <span style='color: #20da45'><b>${format(data.collapse.bestCardinalsGained*cupEffect(7)/100)}</b></span> Cardinals per second`
     }
+    DOM(`omega2Text`).innerHTML = ordinalDisplay("", BHO_VALUE, 0, 3, data.ord.trim, true, true)
 }
 function updateUnlockHTML(mode, i){
     switch (mode) {
@@ -328,8 +329,12 @@ function collapseCardinals(){
         }
     }
     else{
+        let nUnlock = 0
         for (let i = 0; i < data.collapse.alephs.length; i++) {
-            data.collapse.alephs[i] += Math.floor(usedCardinals/8)
+            if (alephData[i].unl()) nUnlock++
+        }
+        for (let i = 0; i < data.collapse.alephs.length; i++) {
+            if (alephData[i].unl()) data.collapse.alephs[i] += Math.floor(usedCardinals/nUnlock)
             updateAlephHTML(i)
         }
     }
