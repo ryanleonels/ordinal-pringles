@@ -45,6 +45,7 @@ function getDefaultObject() {
         base2: false,
         omegaMode: false,
         base2Shift: 1,
+        x1000: false,
     }
 }
 let data = getDefaultObject()

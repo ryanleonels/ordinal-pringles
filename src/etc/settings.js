@@ -74,6 +74,23 @@ function toggleBase2(){
     return save()
 }
 
+function changeBase2ShiftDisplayHTML(){
+    DOM(`base2ShiftToggle`).children[0].innerHTML =
+        data.base2Shift === 1 ? "[Graham's Number]" :
+        data.base2Shift === 2 ? "[BHO]" :
+        data.base2Shift === 3 ? "[Buchholz's Ordinal]" : "[1e256 OP]"
+    DOM(`base2ShiftToggle`).children[0].style.color =
+        data.base2Shift === 1 ? '#2da000' :
+        data.base2Shift === 2 ? '#02b9b4' :
+        data.base2Shift === 3 ? '#c203bf' : '#d76205'
+}
+
+function toggleBase2Shift(){
+    data.base2Shift = data.base2Shift + 1;
+    if (data.base2Shift === 4) data.base2Shift = 0;
+    changeBase2ShiftDisplayHTML()
+}
+
 function toggleOmegaMode(){
     data.omegaMode = !data.omegaMode
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
@@ -88,10 +105,18 @@ function toggleOmegaMode(){
     return save()
 }
 
+function toggleX1000(){
+    data.x1000 = !data.x1000
+    DOM(`x1000Toggle`).innerHTML = `Toggle x1000 Gameplay Speed ${settingsColor(data.x1000)}`
+    return save()
+}
+
 function loadSettings(){
     DOM(`offlineProgressToggle`).innerHTML = `Toggle Offline Progress ${settingsColor(data.offline)}`
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
+    changeBase2ShiftDisplayHTML()
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
+    DOM(`x1000Toggle`).innerHTML = `Toggle x1000 Gameplay Speed ${settingsColor(data.x1000)}`
     DOM(`changeOrdLength`).children[0].innerHTML = `[${data.ord.trim}]`
 
     DOM(`changeOrdColor`).children[0].innerHTML = data.ord.color ? `[Shifting]` : `[Normal]`
