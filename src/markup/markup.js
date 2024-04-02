@@ -49,7 +49,7 @@ function markup(n=D(1)){
     if(data.ord.isPsi){
         data.ord.ordinal = data.ord.ordinal.plus(n);
         if (capOrdinalAtBO && data.ord.base===3 && data.ord.ordinal.gt(BO_VALUE)) data.ord.ordinal = D(BO_VALUE)
-        return data.markup.powers = D(4e256) //D('10^^10')
+        return data.markup.powers = Decimal.max(data.markup.powers, D(4e256)) //D('10^^10')
     }
 
     if(data.chal.active[7]){

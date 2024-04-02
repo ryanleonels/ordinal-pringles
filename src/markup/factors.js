@@ -21,8 +21,10 @@ function buyMaxAuto() {
     data.autoLevels[1] = D(data.autoLevels[1]).add(bulkMax)
 }
 
+let maxFactors = [9,8,7,7,6,6,6,6]
 
 function factorCost(n){
+    if (!data.omegaMode && data.factors[n].gte(maxFactors[n])) return D(Infinity)
     return Decimal.pow(D(10).pow(n+1), D(2).pow(data.factors[n]))
 }
 function hasFactor(n){
@@ -49,8 +51,7 @@ function buyFactor(n){
 function buyMaxFactor(){
     if(data.chal.active[1]) return
     if(data.ord.isPsi) {
-        let maxFactors = [9,8,7,7,6,6,6,6]
-        for (let i = 0; i < data.markup.shifts; i++) data.factors[i] = D(maxFactors[i])
+        for (let i = 0; i < data.markup.shifts; i++) data.factors[i] = Decimal.max(data.factors[i], maxFactors[i])
         return
         /*for (let i = 0; i < data.factors.length; i++){
             let factorsBuyable = D('10^^10').log10().div(i+1).log2().floor().add(1)
@@ -69,7 +70,10 @@ function buyMaxFactor(){
                 buyFactor(i)
             }
         } else {
-            if (factorsBuyable.gte(data.factors[i])) {
+            if (!data.omegaMode) {
+                data.factors[i] = Decimal.max(data.factors[i], Decimal.min(factorsBuyable, maxFactors[i]));
+            }
+            if (data.omegaMode && factorsBuyable.gte(data.factors[i])) {
                 if (D(data.markup.powers).lte('ee15')) data.markup.powers = D(data.markup.powers).sub(Decimal.pow(10, Decimal.mul(i+1, Decimal.pow(2, factorsBuyable.sub(1)))));
                 data.factors[i] = factorsBuyable;
             }

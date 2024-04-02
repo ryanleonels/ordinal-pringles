@@ -80,12 +80,10 @@ function toggleOmegaMode(){
     if (data.omegaMode && data.ord.isPsi) {
         data.ord.isPsi = false
         data.ord.ordinal = (data.ord.base === 2 ? D(4) : D(PSI_VALUE));
-        fsReset()
     }
     if (!data.omegaMode && ((data.ord.base === 3 && data.ord.ordinal.gte(PSI_VALUE)) || (data.ord.base === 2 && data.ord.ordinal.gte(4)))) {
         data.ord.isPsi = true
         data.ord.ordinal = (data.ord.base === 2 ? D(2) : D(4));
-        fsReset()
     }
     return save()
 }
