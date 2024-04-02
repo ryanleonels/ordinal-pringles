@@ -166,7 +166,7 @@ function fixOldSaves(){
         }
     }
     //Old
-    if(data.markup.shifts === 7 && data.dy.level.eq(1)){
+    if(data.markup.shifts >= 7 && data.dy.level.eq(1)){
         data.dy.level = D(4)
         data.dy.gain = D(0.002)
     }

@@ -30,7 +30,7 @@ function updateMarkupHTML(){
     DOM("factorShiftButton").style.borderColor = data.ord.base===3&&data.boost.times===0&&!data.collapse.hasSluggish[0]?`#0000ff`:`#785c13`
     DOM("factorShiftButton").style.color = data.ord.base===3&&data.boost.times===0&&!data.collapse.hasSluggish[0]?`#8080FF`:`goldenrod`
 
-    DOM("dynamicTab").innerText = data.markup.shifts===7||data.chal.active[4]||data.baseless.baseless?'Dynamic':'???'
+    DOM("dynamicTab").innerText = data.markup.shifts>=7||data.chal.active[4]||data.baseless.baseless?'Dynamic':'???'
     DOM("dynamicText").innerText = `Your Dynamic Factor is ${data.chal.active[4]?'dividing':'multiplying'} AutoClickers by ${format(data.dy.level, 3)}\nIt increases by ${format(dyGain())}/s, and caps at ${format(data.dy.cap)}`
     DOM("dynamicText2").innerText = `Your Dynamic Factor is ${format(data.dy.level, 3)} [+${format(dyGain())}/s]. It caps at ${format(data.dy.cap)}`
 
@@ -123,7 +123,6 @@ function factorShiftConfirm(){
 
 function factorShift(isAuto = false){
     if(data.baseless.baseless) return
-    if(data.markup.shifts >= 7 + data.base2) return
     if(data.markup.shifts === 7 && (!isAuto || data.base2)){
         if(data.ord.isPsi && data.ord.ordinal.gte(GRAHAMS_VALUE) && data.boost.times === 0) return boost(true)
         else {
@@ -137,6 +136,7 @@ function factorShift(isAuto = false){
         if(!data.ord.isPsi || data.ord.ordinal.lt(GRAHAMS_VALUE) || !data.base2) return //createAlert("Failure", "Insufficient Ordinal", "Dang.")
     }
     if(D(data.markup.powers).lt(req)) return //createAlert("Failure", "Insufficient Ordinal Powers", "Dang.")
+    if(data.markup.shifts >= 7 + data.base2) return
     if(!data.chal.active[3] && !(data.boost.hasBUP[2] && checkAllIndexes(data.chal.active, true)) && (data.ord.base > (3 - data.base2))) --data.ord.base
     if(data.markup.shifts < 7 + data.base2) ++data.markup.shifts
 
