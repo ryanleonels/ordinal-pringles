@@ -12,6 +12,8 @@ function buyMaxAuto() {
     buyAuto(0)
     buyAuto(1)
 
+    if (data.chal.active[0]) return
+
     let bulkSucc = Decimal.floor(Decimal.log2(Decimal.add(1, D(data.markup.powers).div(Decimal.mul(100, Decimal.pow(2, data.autoLevels[0]))))))
     if (D(data.markup.powers).lte('ee15')) data.markup.powers = D(data.markup.powers).sub(Decimal.pow(2, bulkSucc).sub(1).mul(100).mul(Decimal.pow(2, data.autoLevels[0])))
     data.autoLevels[0] = D(data.autoLevels[0]).add(bulkSucc)
