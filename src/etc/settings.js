@@ -91,6 +91,12 @@ function toggleBase2Shift(){
     changeBase2ShiftDisplayHTML()
 }
 
+function toggleEnterChalAfter3(){
+    data.enterChalAfter3 = !data.enterChalAfter3
+    DOM(`enterChalAfter3Toggle`).innerHTML = `Toggle Enter Challenge After 3 Completions ${settingsColor(data.enterChalAfter3)}`
+    return save()
+}
+
 function toggleDynamicAlwaysOn(){
     data.dynamicAlwaysOn = !data.dynamicAlwaysOn
     if (data.dynamicAlwaysOn && data.markup.shifts < 7 && !data.chal.active[4]) {
@@ -137,6 +143,7 @@ function loadSettings(){
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
     changeBase2ShiftDisplayHTML()
     DOM(`dynamicAlwaysOnToggle`).innerHTML = `Toggle Dynamic Factor in FS0-6 ${settingsColor(data.dynamicAlwaysOn)}`
+    DOM(`enterChalAfter3Toggle`).innerHTML = `Toggle Enter Challenge After 3 Completions ${settingsColor(data.enterChalAfter3)}`
     DOM(`incrementyInChalToggle`).innerHTML = `Toggle Incrementy Gain in Challenges ${settingsColor(data.incrementyInChal)}`
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
     DOM(`x1000Toggle`).innerHTML = `Toggle x1000 Gameplay Speed ${settingsColor(data.x1000)}`

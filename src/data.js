@@ -45,6 +45,7 @@ function getDefaultObject() {
         base2: false,
         base2Shift: 1,
         dynamicAlwaysOn: false,
+        enterChalAfter3: false,
         incrementyInChal: false,
         omegaMode: false,
         x1000: false,
