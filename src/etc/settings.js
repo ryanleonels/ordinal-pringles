@@ -38,6 +38,7 @@ function changeOrdDisplayHTML(){
         data.ord.displayType === "Buchholz" ? '#2da000' :
         data.ord.displayType === "Veblen" ? '#02b9b4' :
         data.ord.displayType === "BMS" ? '#c203bf' : '#d76205'
+    DOM(`base3UncapToggle`).innerHTML = `Uncap Base 3 Ordinals >= ${ordinalDisplay("", BO_VALUE, 0, 3, data.ord.trim, true, true)} ${settingsColor(data.base3Uncap)}`
 }
 
 function toggleOrdDisplay(){

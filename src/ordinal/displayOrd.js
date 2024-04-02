@@ -1,6 +1,6 @@
 // Displays Ordinals when the value of ord is less than NUMBER.MAX_VALUE
 function displayOrd(ord,over,base,trim = data.ord.trim,forcePsi = false) {
-    if(data.ord.isPsi || forcePsi) return displayPsiOrd(ord, trim)
+    if(data.ord.isPsi || forcePsi) return displayPsiOrd(ord, trim, base)
     if(D(ord).eq(data.ord.ordinal) && D(ord).gt(Number.MAX_VALUE)) return displayInfiniteOrd(ord, over, base, trim)
     if(D(ord).eq(data.ord.ordinal)) ord = Number(ord)
 
