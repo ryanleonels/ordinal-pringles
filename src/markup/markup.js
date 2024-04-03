@@ -78,6 +78,18 @@ function opMult(){
 }
 function opGain(ord = data.ord.ordinal, base = data.ord.base, over = data.ord.over, trim = 0) {
     if(D(ord).eq(data.ord.ordinal) && D(ord).gte(Number.MAX_VALUE) && !data.omegaMode) return D(4e256)
+    if(D(D(ord).layer).gt(1000)) {
+        if (!data.omegaMode) return D(4e256)
+        let ord1 = D(ord)
+        ord1.layer = 1000
+        let gain1 = opGain(ord1, base, over, trim)
+        let layer = D(D(ord).layer)
+        let layer1 = D(D(ord1).layer)
+        let layerDiff = layer.sub(layer1)
+        gain1.layer = Math.min(D(gain1.layer).add(layerDiff).add(0.1).floor().toNumber(), Number.MAX_VALUE)
+        return gain1
+    }
+    if (trim >= 10) return new Decimal(0)
     if(D(ord).eq(data.ord.ordinal)) ord = D(ord)
     //if(data.ord.isPsi && base === 3){
     //    return Math.round(ord / 1e270 + 1) * 1e270
@@ -99,6 +111,17 @@ let totalOPGain = () => opGain().mul(opMult()).min(data.omegaMode ? Decimal.tetr
 function calcOrdPoints(ord = data.ord.ordinal, base = data.ord.base, over = data.ord.over, trim=0) {
     //console.log(ord)
     if (D(ord).toString() === "NaNeNaN") return new Decimal(0)
+    if(D(D(ord).layer).gt(1000)) {
+        if (!data.omegaMode) return D(4e256)
+        let ord1 = D(ord)
+        ord1.layer = 1000
+        let gain1 = calcOrdPoints(ord1, base, over, trim)
+        let layer = D(D(ord).layer)
+        let layer1 = D(D(ord1).layer)
+        let layerDiff = layer.sub(layer1)
+        gain1.layer = Math.min(D(gain1.layer).add(layerDiff).add(0.1).floor().toNumber(), Number.MAX_VALUE)
+        return gain1
+    }
     let opBase = new Decimal(10)
     if (trim >= 10) return new Decimal(0)
     if (Decimal.lt(ord, base)) {
