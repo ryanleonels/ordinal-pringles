@@ -20,16 +20,17 @@ function displayVeblenOrd(ord,over,base,trim = data.ord.trim,forcePsi = false) {
 }
 
 // Displays Ordinals using Veblen when the value of ord is greater than NUMBER.MAX_VALUE
-function displayInfiniteVeblenOrd(ord, over, base, trim = data.ord.trim){
+function displayInfiniteVeblenOrd(ord, over, base, trim = data.ord.trim, recursionDepth = 0){
+    let maxRecursionDepth = 1000 // needed as the recursion can be very deep in certain cases
     ord = Decimal.floor(ord)
     over = Decimal.floor(over)
-    if(trim <= 0) return `...`
+    if(trim <= 0 || recursionDepth >= maxRecursionDepth) return `...`
     if(ord.lt(base)) return ord.plus(over)
     const magnitude = Decimal.floor(Decimal.ln(ord).div(Decimal.ln(base)).plus(D(1e-14)))
     const magnitudeAmount = D(base).pow(magnitude)
     const amount = Decimal.floor(ord.div(magnitudeAmount).plus(D(1e-14)))
     let finalOutput = "&phi;(1)"
-    if (magnitude.gt(1)) finalOutput = "&phi;("+displayInfiniteVeblenOrd(magnitude, 0, base)+")"
+    if (magnitude.gt(1)) finalOutput = "&phi;("+displayInfiniteVeblenOrd(magnitude, 0, base, trim, recursionDepth+1)+")"
     if (amount.gt(1)) finalOutput += amount
     const firstAmount = amount.times(magnitudeAmount)
     if(ord.sub(firstAmount).gt(0.1)) finalOutput += "+" + displayInfiniteVeblenOrd(ord.sub(firstAmount), over, base, trim - 1)

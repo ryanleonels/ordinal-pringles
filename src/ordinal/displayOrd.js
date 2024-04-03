@@ -20,16 +20,17 @@ function displayOrd(ord,over,base,trim = data.ord.trim,forcePsi = false) {
 }
 
 // Displays Ordinals when the value of ord is greater than NUMBER.MAX_VALUE
-function displayInfiniteOrd(ord, over, base, trim = data.ord.trim){
+function displayInfiniteOrd(ord, over, base, trim = data.ord.trim, recursionDepth = 0){
+    let maxRecursionDepth = 1000 // needed as the recursion can be very deep in certain cases
     ord = Decimal.floor(ord)
     over = Decimal.floor(over)
-    if(trim <= 0) return `...`
+    if(trim <= 0 || recursionDepth >= maxRecursionDepth) return `...`
     if(ord.lt(base)) return ord.plus(over)
     const magnitude = Decimal.floor(Decimal.ln(ord).div(Decimal.ln(base)).plus(D(1e-14)))
     const magnitudeAmount = D(base).pow(magnitude)
     const amount = Decimal.floor(ord.div(magnitudeAmount).plus(D(1e-14)))
     let finalOutput = "&omega;"
-    if (magnitude.gt(1)) finalOutput += "<sup>"+displayInfiniteOrd(magnitude, 0, base)+"</sup>"
+    if (magnitude.gt(1)) finalOutput += "<sup>"+displayInfiniteOrd(magnitude, 0, base, trim, recursionDepth+1)+"</sup>"
     if (amount.gt(1)) finalOutput += amount
     const firstAmount = amount.times(magnitudeAmount)
     if(ord.sub(firstAmount).gt(0.1)) finalOutput += "+" + displayInfiniteOrd(ord.sub(firstAmount), over, base, trim - 1)
