@@ -45,7 +45,6 @@ function getDefaultObject() {
         base2: false,
         base2Shift: 1,
         base3Uncap: false,
-        disableExpantaNum: false,
         dynamicAlwaysOn: false,
         enterChalAfter3: false,
         incrementyInChal: false,
@@ -181,7 +180,6 @@ function fixOldSaves(){
     if(data.ord.isPsi && data.ord.ordinal.gt(GRAHAMS_VALUE) && data.boost.times === 0 && !data.collapse.hasSluggish[0]) data.ord.ordinal = D(GRAHAMS_VALUE)
 
     capOrdinalAtBO = !data.base3Uncap;
-    useExpantaNum = !data.disableExpantaNum;
 
     return extra
 }

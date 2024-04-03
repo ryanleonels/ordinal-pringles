@@ -108,13 +108,6 @@ function toggleBase3Uncap(){
     return save()
 }
 
-function toggleDisableExpantaNum(){
-    data.disableExpantaNum = !data.disableExpantaNum;
-    useExpantaNum = !data.disableExpantaNum;
-    DOM(`disableExpantaNumToggle`).innerHTML = `Disable ExpantaNum in Hardy Value Display ${settingsColor(data.disableExpantaNum)}`
-    return save()
-}
-
 function toggleEnterChalAfter3(){
     data.enterChalAfter3 = !data.enterChalAfter3
     DOM(`enterChalAfter3Toggle`).innerHTML = `Toggle Enter Challenge After 3 Completions ${settingsColor(data.enterChalAfter3)}`
@@ -152,6 +145,7 @@ function toggleOmegaMode(){
     if (!data.omegaMode && ((data.ord.base === 3 && data.ord.ordinal.gte(PSI_VALUE)) || (data.ord.base === 2 && data.ord.ordinal.gte(4)))) {
         data.ord.isPsi = true
         data.ord.ordinal = (data.ord.base === 2 ? D(2) : D(4));
+        for (let i = 0; i < data.markup.shifts; i++) data.factors[i] = Decimal.min(data.factors[i], maxFactors[i])
     }
     return save()
 }
@@ -167,7 +161,6 @@ function loadSettings(){
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
     changeBase2ShiftDisplayHTML()
     DOM(`base3UncapToggle`).innerHTML = `Uncap Base 3 Ordinals >= ${ordinalDisplay("", BO_VALUE, 0, 3, data.ord.trim, true, true)} ${settingsColor(data.base3Uncap)}`
-    DOM(`disableExpantaNumToggle`).innerHTML = `Disable ExpantaNum in Hardy Value Display ${settingsColor(data.disableExpantaNum)}`
     DOM(`dynamicAlwaysOnToggle`).innerHTML = `Toggle Dynamic Factor in FS0-6 ${settingsColor(data.dynamicAlwaysOn)}`
     DOM(`enterChalAfter3Toggle`).innerHTML = `Toggle Enter Challenge After 3 Completions ${settingsColor(data.enterChalAfter3)}`
     DOM(`incrementyInChalToggle`).innerHTML = `Toggle Incrementy Gain in Challenges ${settingsColor(data.incrementyInChal)}`
