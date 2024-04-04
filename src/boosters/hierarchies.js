@@ -17,7 +17,7 @@ function updateHBBuyableHTML(i){
 
     if(data.hierarchies.rebuyableAmt[i] >= 3333) return el.innerHTML = `${hbData[i].text} (${formatWhole(data.hierarchies.rebuyableAmt[i])})<br>Maxed!<br>Currently: ${format(hbData[i].effect())}x`
     el.innerHTML = i === 2 || i===5 ? `${hbData[i].text} (${formatWhole(data.hierarchies.rebuyableAmt[i])})<br>${format(hbData[i].cost())} Incrementy<br>Currently: ${format(hbData[i].effect())}x`
-    : `${hbData[i].text} (${formatWhole(data.hierarchies.rebuyableAmt[i])})<br>${ordinalDisplay('', hbData[i].cost(), 0, 10, ordinalDisplayTrim(), false)} ${cost}<br>Currently: ${format(hbData[i].effect())}x`
+    : `${hbData[i].text} (${formatWhole(data.hierarchies.rebuyableAmt[i])})<br>${ordinalDisplay('', hbData[i].cost(), 0, 10, ordinalDisplayTrim(4), false)} ${cost}<br>Currently: ${format(hbData[i].effect())}x`
 }
 function updateHUPHTML(i){
     const el = DOM(`hup${i}`)
@@ -31,7 +31,7 @@ function updateHUPHTML(i){
 }
 
 function initHierarchies(){
-    // Buyabless
+    // Buyables
     let columns = [DOM('h0Buyables'), DOM('h1Buyables')]
     let total = 0
     for (let i = 0; i < columns.length; i++) {
@@ -41,7 +41,7 @@ function initHierarchies(){
             hb.className = `hb${i}`
             hb.id = `hb${total}`
 
-            hb.innerHTML = n < 2 ? `${hbData[total].text} (${formatWhole(data.hierarchies.rebuyableAmt[total])})<br>${ordinalDisplay('', hbData[total].cost(), 0, 10/*hierarchyData[i].base()*/, ordinalDisplayTrim(), false)} ${cost}<br>Currently: ${format(hbData[total].effect())}x`
+            hb.innerHTML = n < 2 ? `${hbData[total].text} (${formatWhole(data.hierarchies.rebuyableAmt[total])})<br>${ordinalDisplay('', hbData[total].cost(), 0, 10/*hierarchyData[i].base()*/, ordinalDisplayTrim(4), false)} ${cost}<br>Currently: ${format(hbData[total].effect())}x`
             : `${hbData[total].text} (${formatWhole(data.hierarchies.rebuyableAmt[total])})<br>${format(hbData[total].cost())} Incrementy<br>Currently: ${format(hbData[total].effect())}x`
 
             columns[i].append(hb)
