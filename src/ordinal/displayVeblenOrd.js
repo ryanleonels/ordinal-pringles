@@ -54,7 +54,7 @@ function displayPsiVeblenOrd(ord, trim = data.ord.trim, base = data.ord.base, ab
     }
     if(ord <= 0) return (aboveBHO ? "1" : "0")
     if(ord < 4) return extraOrdMarksVeblen[ord]
-    const magnitude = Math.floor(Math.log(ord/4)/Math.log(3))
+    const magnitude = Math.floor(Math.log(ord/4)/Math.log(3)+1e-14)
     const magnitudeAmount = 4*3**magnitude
     let finalOutput = ordMarksVeblen[Math.min(magnitude,ordMarksVeblen.length-1)]
     if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayPsiVeblenOrd(ord-magnitudeAmount, trim-1, base, aboveBHO))
@@ -81,7 +81,7 @@ function displayInfinitePsiVeblenOrd(ord, trim = data.ord.trim, base = data.ord.
     }*/
     if(ord.lte(0)) return (aboveBHO ? "1" : "0")
     if(ord.lt(4)) return extraOrdMarksVeblen[ord]
-    const magnitude = Decimal.floor(Decimal.ln(ord.div(4)).div(Decimal.ln(3)))
+    const magnitude = Decimal.floor(Decimal.ln(ord.div(4)).div(Decimal.ln(3)).plus(D(1e-14)))
     const magnitudeAmount = D(4).times(Decimal.pow(3, magnitude))
     let finalOutput = infiniteOrdMarksVeblen(magnitude) //Decimal.min(magnitude,ordMarksXStart[ordMarksXStart.length-1])
     if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayInfinitePsiVeblenOrd(ord.sub(magnitudeAmount), trim-1, base, aboveBHO))

@@ -15,7 +15,7 @@ function displayPsiOrd(ord, trim = data.ord.trim, base = data.ord.base) {
     }
     if(ord === 0) return ""
     if(ord < 4) return extraOrdMarks[ord]
-    const magnitude = Math.floor(Math.log(ord/4)/Math.log(3))
+    const magnitude = Math.floor(Math.log(ord/4)/Math.log(3)+1e-14)
     const magnitudeAmount = 4*3**magnitude
     let finalOutput = ordMarks[Math.min(magnitude,ordMarks.length-1)]
     if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayPsiOrd(ord-magnitudeAmount, trim-1))
@@ -39,7 +39,7 @@ function displayInfinitePsiOrd(ord, trim = data.ord.trim, base = data.ord.base) 
     }*/
     if(ord.eq(0)) return ""
     if(ord.lt(4)) return extraOrdMarks[ord]
-    const magnitude = D(ord.layer).gte(Number.MAX_VALUE) ? ord : Decimal.floor(Decimal.ln(ord.div(4)).div(Decimal.ln(3)))
+    const magnitude = D(ord.layer).gte(Number.MAX_VALUE) ? ord : Decimal.floor(Decimal.ln(ord.div(4)).div(Decimal.ln(3)).plus(D(1e-14)))
     const magnitudeAmount = D(4).times(Decimal.pow(3, magnitude))
     let finalOutput = infiniteOrdMarks(magnitude) //Decimal.min(magnitude,ordMarksXStart[ordMarksXStart.length-1])
     if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayInfinitePsiOrd(ord.sub(magnitudeAmount), trim-1))
@@ -56,7 +56,7 @@ function displayBase2PsiOrd(ord, trim = data.ord.trim) {
     if(ord.eq(0)) return ""
     if(ord.lt(2)) return extraOrdMarks2[ord]
     let finalOutput = ""
-    const magnitude = Decimal.floor(Decimal.ln(ord.div(2)).div(Decimal.ln(2)))
+    const magnitude = Decimal.floor(Decimal.ln(ord.div(2)).div(Decimal.ln(2)).plus(D(1e-14)))
     const magnitudeAmount = D(2).times(Decimal.pow(2, magnitude))
     finalOutput = infiniteOrdMarks2X(magnitude) //ordMarks2[Decimal.min(magnitude,ordMarks2.length-1)]
     if(finalOutput.includes("x"))finalOutput = finalOutput.replace(/x/, displayBase2PsiOrd(ord.sub(magnitudeAmount), trim-1))

@@ -107,7 +107,7 @@ function displayPsiBMSOrd(ord, trim = data.ord.trim, base = data.ord.base, depth
     }
     if(ord === 0) return (depth === 0 ? "(0,0)" : "")
     if(ord < 4) return (depth === 0 ? "(0,0)" + renderBMS(extraOrdMarksBMS[ord], depth+1) : renderBMS(extraOrdMarksBMS[ord], depth))
-    const magnitude = Math.floor(Math.log(ord/4)/Math.log(3))
+    const magnitude = Math.floor(Math.log(ord/4)/Math.log(3)+1e-14)
     const magnitudeAmount = 4*3**magnitude
     let buchholzOutput = ordMarks[Math.min(magnitude,ordMarks.length-1)]
     let finalOutput = renderBMS(ordMarksBMS[Math.min(magnitude,ordMarksBMS.length-1)], depth)
@@ -151,7 +151,7 @@ function displayInfinitePsiBMSOrd(ord, trim = data.ord.trim, base = data.ord.bas
     if(ord.eq(0)) return (depth === 0 ? "(0,0)" : "")
     if(ord.lt(4)) return (depth === 0 ? "(0,0)" + renderBMS(extraOrdMarksBMS[ord], depth+1) : renderBMS(extraOrdMarksBMS[ord], depth))
     if (D(ord.layer).gte(Number.MAX_VALUE)) return trimBMSFinalOutput(infiniteOrdMarksBMS(ord), trim) // return 3-row BMS for ordinals above F1.80e308 as is
-    const magnitude = Decimal.floor(Decimal.ln(ord.div(4)).div(Decimal.ln(3)))
+    const magnitude = Decimal.floor(Decimal.ln(ord.div(4)).div(Decimal.ln(3)).plus(D(1e-14)))
     if (magnitude.gte(ordMarksBO)) return trimBMSFinalOutput(infiniteOrdMarksBMS(magnitude), trim) // return 3-row BMS for ordinals above ψ(Ω_ω) as is
     const magnitudeAmount = D(4).times(Decimal.pow(3, magnitude))
     let buchholzOutput = infiniteOrdMarks(magnitude) //Decimal.min(magnitude,ordMarksXStart[ordMarksXStart.length-1])
