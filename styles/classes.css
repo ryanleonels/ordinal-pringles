@@ -338,6 +338,30 @@
     color: #940525;
     background: black;
 }
+.incrementyverseText{
+    color: white;
+    font-family: DosisLight;
+    text-align: center;
+}
+.enterIncrementyverseButton {
+  border-radius: 20px;
+  display:block;
+  width: 600px;
+  margin:auto;
+  margin-top:30px;
+  height:300px;
+  text-align:center;
+  font-size:40pt;
+  font-weight:bold;
+  background:url('https://cdn.glitch.com/6f7e4eb0-585a-45ff-a8c1-2d13a9a7d93f%2Fvortex3.gif?v=1596905007129') no-repeat center;
+  background-size: cover;
+  font-family: DosisSemiBold;
+  color: #0000FF;
+  cursor: pointer;
+  transition-duration: 0.2s;
+  border: solid #0000FF 5px;
+  text-shadow: 6px 6px 6px #0000FF;
+}
 .settingsButton{
     width: 10rem;
     min-height: 1.5rem;

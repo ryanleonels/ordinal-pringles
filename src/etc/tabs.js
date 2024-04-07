@@ -121,7 +121,12 @@ function isTabUnlocked(t){
         case 'sing': return data.boost.unlocks[4]
         case 'baseless': return data.boost.unlocks[4]
         case 'omega': return data.incrementy.totalCharge > 71 || hasSingFunction(6)
+        case 'enterIncrementyverse': return data.incrementy.bestAmt.gte("1e750") && data.achs.length >= 64
 
         default: return true
     }
+}
+
+function die(){
+    return createAlert("Coming Soon!", "<img src=\"https://cdn.discordapp.com/emojis/853002327362895882.webp?size=24\">", "Got it!")
 }

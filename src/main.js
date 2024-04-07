@@ -11,7 +11,10 @@ function mainLoop() {
 
     if(data.chal.active[7]) data.chal.decrementy = Decimal.max(1, data.chal.decrementy.mul(decrementyGain().pow(uDiff)))
 
-    if(data.ord.isPsi && data.boost.unlocks[1]) data.incrementy.amt = data.incrementy.amt.plus(incrementyGain().times(uDiff))
+    if(data.ord.isPsi && data.boost.unlocks[1]) {
+        data.incrementy.amt = data.incrementy.amt.plus(incrementyGain().times(uDiff))
+        if (data.incrementy.amt.gte(data.incrementy.bestAmt)) data.incrementy.bestAmt = data.incrementy.amt
+    }
     if(data.boost.unlocks[3]) {
         data.overflow.bp += getOverflowGain(0)*uDiff
         data.overflow.oc += getOverflowGain(1)*uDiff

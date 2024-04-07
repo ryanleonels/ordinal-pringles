@@ -15,6 +15,8 @@ function updateCollapseHTML(){
     updateDarknessHTML()
     updateSingularityHTML()
     updatePurificationTabHTML()
+
+    DOM("bestIncrementy").textContent = format(data.incrementy.bestAmt)
 }
 function updateAutoPrestigeHTML(){
     for (let i = 0; i < data.collapse.apEnabled.length; i++) {
@@ -154,6 +156,7 @@ function checkCollapseUnlockHTML(){
     DOM('singTab').innerText = data.boost.unlocks[4] ? 'Singularity' : '???'
     DOM('baselessTab').innerText = data.boost.unlocks[4] ? 'Baselessness' : '???'
     DOM('omegaTab').innerText = isTabUnlocked('omega') ? 'Purification' : '???'
+    DOM('enterIncrementyverseTab').innerText = isTabUnlocked('enterIncrementyverse') ? 'Incrementyverse' : '???'
 }
 
 let cardinalGain = () => data.boost.times < 34 ? 0 : ((((Math.sqrt(data.boost.times-34)
