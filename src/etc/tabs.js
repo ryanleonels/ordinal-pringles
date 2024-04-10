@@ -121,7 +121,7 @@ function isTabUnlocked(t){
         case 'sing': return data.boost.unlocks[4]
         case 'baseless': return data.boost.unlocks[4]
         case 'omega': return data.incrementy.totalCharge > 71 || hasSingFunction(6)
-        case 'enterIncrementyverse': return data.incrementy.bestAmt.gte("1e750") && data.achs.length >= 64
+        case 'enterHierarchyverse': return data.incrementy.bestAmt.gte("1e750") && data.achs.length >= 64
 
         default: return true
     }

@@ -338,12 +338,12 @@
     color: #940525;
     background: black;
 }
-.incrementyverseText{
+.hierarchyverseText{
     color: white;
     font-family: DosisLight;
     text-align: center;
 }
-.enterIncrementyverseButton {
+.enterHierarchyverseButton {
   border-radius: 20px;
   display:block;
   width: 600px;
