@@ -42,6 +42,7 @@ function getDefaultObject() {
         isBeta: IS_BETA,
         offline: true,
         gword: {unl: false, enabled: false},
+        ms: 50,
         base2: false,
         base2Shift: 1,
         base3Uncap: false,

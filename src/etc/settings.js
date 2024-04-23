@@ -59,6 +59,15 @@ function toggleOrdDisplay(){
     changeOrdDisplayHTML()
 }
 
+// Changes the Millisecond Interval
+function changeMs(x){
+    if (!x || isNaN(Math.floor(x))) return createAlert('Failure', 'Invalid Input.', `Oops.`)
+    data.ms = Math.min(Math.max(Math.floor(x),20),1000)
+    DOM(`changeMsInterval`).children[0].innerHTML = `[${data.ms}ms]`
+    save();
+    location.reload();
+}
+
 function toggleBase2(){
     data.base2 = !data.base2
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
@@ -158,6 +167,7 @@ function toggleX1000(){
 
 function loadSettings(){
     DOM(`offlineProgressToggle`).innerHTML = `Toggle Offline Progress ${settingsColor(data.offline)}`
+    DOM(`changeMsInterval`).children[0].innerHTML = `[${data.ms}ms]`
     DOM(`base2Toggle`).innerHTML = `Toggle Base 2 and Factor 8 ${settingsColor(data.base2)}`
     changeBase2ShiftDisplayHTML()
     DOM(`base3UncapToggle`).innerHTML = `Uncap Base 3 Ordinals >= ${ordinalDisplay("", BO_VALUE, 0, 3, data.ord.trim, true, true)} ${settingsColor(data.base3Uncap)}`
