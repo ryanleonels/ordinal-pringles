@@ -1,7 +1,7 @@
 function mainLoop() {
     // Calculate diff and usableDiff
     if(data.lastTick === 0) data.lastTick = Date.now()
-    let unadjusted = data.offline ? Math.max((Date.now() - data.lastTick), 0) : 50
+    let unadjusted = data.offline ? Math.max((Date.now() - data.lastTick), 0) : data.ms
     let diff = unadjusted * (data.x1000 ? 1000 : 1); // x1000 here!
     // Used for Offline Progress
     let uDiff = diff/1000
