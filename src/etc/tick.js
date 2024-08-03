@@ -30,6 +30,8 @@ function tick(diff){
     timesToLoop[2] = data.boost.hasBUP[autoUps[0]] ? D(1) : D(0)
     timesToLoop[3] = data.boost.hasBUP[autoUps[1]] ? t2Auto() : D(0)
 
+    if (inAnyPurification() && data.boost.times > 33) timesToLoop[3] = timesToLoop[3].div(D(3).pow(data.boost.times - 33))
+
     if(Decimal.floor(D(timesToLoop[0]).div(1000)).gte(1)) {
         successor()
         timesToLoop[0] = D(timesToLoop[0]).sub(1000)
@@ -72,6 +74,8 @@ function tick(diff){
     let boostCheck = data.boost.times > 0 || data.collapse.hasSluggish[0]
     if(timesToLoop[3].gte(1) && data.ord.isPsi && data.autoStatus.enabled[1] && !boostCheck && data.ord.isPsi) data.ord.ordinal = D(GRAHAMS_VALUE)
     if(timesToLoop[3].gte(1) && data.ord.isPsi && data.autoStatus.enabled[1] && collapseCheck && boostCheck) markup(timesToLoop[3].times(diff/1000))
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if (data.ord.isPsi && data.ord.ordinal.gt(ordinalCap)) data.ord.ordinal = ordinalCap
 
     // Automation Tier 2: Post-Collapse
     if(data.collapse.hasSluggish[2] && data.autoStatus.enabled[2]) sacrificeIncrementy() //Charge Autobuyer

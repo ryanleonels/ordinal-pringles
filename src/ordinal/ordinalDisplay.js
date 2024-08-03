@@ -94,5 +94,5 @@ function displayOrdMarks(x){
 
 function displayBoostReq(n = data.boost.times){
     if (n < 33) return ordinalDisplay('', boostReq(n), data.ord.over, data.ord.base, ((data.ord.displayType === "BMS") || (data.ord.displayType === "Y-Sequence")) ? Math.max(data.ord.trim, 3) : 3, true, true)
-    return displayOrdMarks(n + 7)
+    return displayOrdMarks(40 + data.sing.level)
 }

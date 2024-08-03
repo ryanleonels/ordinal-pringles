@@ -12,7 +12,7 @@ const VERSION = "0.3.3"
 const VERSION_NAME = "The World's Purest Pringle"
 const VERSION_DATE = "April 2nd, 2024"
 const IS_BETA = false
-const SAVE_PATH = () => IS_BETA ? "ordinalPRINGLESBETAsave" : "ordinalPRINGLESsave"
+const SAVE_PATH = () => IS_BETA ? "ordinalPRINGLESBETAsaveCapped" : "ordinalPRINGLESsaveCapped"
 
 //create all the variables in a data object for saving
 function getDefaultObject() {
@@ -82,6 +82,10 @@ function fixSave(main=getDefaultObject(), data) {
 }
 function fixOldSaves(){
     let extra = false
+
+    //Add Pringles Cap
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if (data.ord.isPsi && data.ord.ordinal.gt(ordinalCap)) data.ord.ordinal = ordinalCap
 
     //Settings fix
     if(typeof data.sToggles === "number") data.sToggles = settingsDefaults

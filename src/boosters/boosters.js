@@ -224,14 +224,15 @@ function boost(f=false, auto=false, hotkey=false){
 }
 function boostReq(n = data.boost.times){
     if(data.boost.times === 0 && !data.collapse.hasSluggish[0]) return D(GRAHAMS_VALUE)
-    if(n >= 34) return D(BHO_VALUE).times(D(3).pow(n-33))
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if(n >= 34) return ordinalCap
     let scaling = n < 30 ? 1 : Math.floor(100*(n/15))
-    return n < 33 ? D(3 ** (n+1) * 4 * 10 * scaling) : D(BHO_VALUE)
+    return n < 33 ? D(3 ** (n+1) * 4 * 10 * scaling) : ordinalCap
 }
 //Credit to ryanleonels
-let boostLimit = () => (data.collapse.times === 0) ? 33 : Infinity;
+let boostLimit = () => (data.collapse.times === 0) ? 33 : 34;
 function getBulkBoostAmt(){
-    if (!data.sToggles[7] || !data.ord.isPsi || data.ord.ordinal.lte(boostReq()) || data.boost.times >= Number.MAX_VALUE) return 1
+    if (!data.sToggles[7] || !data.ord.isPsi || data.ord.ordinal.lte(boostReq()) || data.boost.times >= Number.MAX_VALUE) return (data.boost.times >= 33 ? singEffects[4].effect() : 1)
     let maxBoost = data.boost.times
     while (data.ord.ordinal.gte(boostReq(maxBoost)) && maxBoost < boostLimit()) {
         maxBoost++
@@ -240,6 +241,7 @@ function getBulkBoostAmt(){
             break
         }
     }
+    if (maxBoost >= boostLimit()) maxBoost += (singEffects[4].effect() - 1)
     return Math.min(Math.max(maxBoost - data.boost.times, 1), Number.MAX_VALUE)
     //return Math.round(Math.log(data.ord.ordinal/40)/Math.log(3)) - data.boost.times
 }
