@@ -19,7 +19,8 @@ function updateSingLevelHTML(){
     DOM(`singLevel2`).innerHTML = `Your Singularity's highest ever density was <b>${data.sing.highestLevel > 0 ? ordinalDisplay('H', data.sing.highestLevel, 0, 10, ordinalDisplayTrim(3), false) : `H<sub>0</sub>`}</b> (10)`
 
     for (let i = 0; i < singEffects.length; i++) {
-        DOM(`singEffect${i}`).innerHTML = `Your Singularity is ${singEffects[i].desc} <b>${format(singEffects[i].effect(), 3)}</b>`
+        let singEffectText = (i === 3) ? displayPsiOrd(singEffects[i].effect()) : format(singEffects[i].effect(), 3)
+        DOM(`singEffect${i}`).innerHTML = `Your Singularity is ${singEffects[i].desc} <b>${singEffectText}</b>`
     }
 }
 function updateSingFunctionHTML(i){
