@@ -70,7 +70,7 @@ let singEffects = [
     {desc: "reducing the Decrementy gain exponent by", effect: () => Math.sqrt(data.sing.level)/50},
     {desc: "raising AutoBuyer speed to the", effect: () => 1-Math.pow(data.sing.level, 1/2)/100},
     {desc: "raising the Factor Boosts 34+ requirement and the Ordinal Cap to", effect: () => D(BHO_VALUE).times(D(3).pow(data.sing.level))},
-    {desc: "multiplying Factor Boost gain by", effect: () => (data.sing.level * 2) + 1},
+    {desc: "multiplying Factor Boost gain by", effect: () => inAnyPurification() ? 1 : (data.sing.level * 2) + 1},
 ]
 let maxSingLevel = () => data.incrementy.charge
 
