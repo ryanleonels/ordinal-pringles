@@ -195,7 +195,7 @@ function boost(f=false, auto=false, hotkey=false){
     if((!data.ord.isPsi || data.ord.ordinal.lt(boostReq())) && (auto || hotkey)) return
     if((!data.ord.isPsi || data.ord.ordinal.lt(boostReq())) && !f) return createAlert("Failure", "Insufficient Ordinal", "Dang.")
 
-    if(data.boost.times === boostLimit()) return createAlert("The End... for now!", "You've reached the current Endgame!", "Thanks!")
+    //if(data.boost.times === boostLimit()) return createAlert("The End... for now!", "You've reached the current Endgame!", "Thanks!")
 
     if(data.boost.times === 0){
         DOM('boostNav').style.display = 'block'
@@ -224,14 +224,15 @@ function boost(f=false, auto=false, hotkey=false){
 }
 function boostReq(n = data.boost.times){
     if(data.boost.times === 0 && !data.collapse.hasSluggish[0]) return D(GRAHAMS_VALUE)
-    if(n >= 34) return D(BHO_VALUE).times(D(3).pow(n-33))
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if(n >= 34) return (data.cappedMode ? ordinalCap : D(BHO_VALUE).times(D(3).pow(n-33)))
     let scaling = n < 30 ? 1 : Math.floor(100*(n/15))
-    return n < 33 ? D(3 ** (n+1) * 4 * 10 * scaling) : D(BHO_VALUE)
+    return n < 33 ? D(3 ** (n+1) * 4 * 10 * scaling) : (data.cappedMode ? ordinalCap : D(BHO_VALUE))
 }
 //Credit to ryanleonels
-let boostLimit = () => (data.collapse.times === 0) ? 33 : Infinity;
+let boostLimit = () => (data.collapse.times === 0) ? 33 : (data.cappedMode ? 34 : Infinity);
 function getBulkBoostAmt(){
-    if (!data.sToggles[7] || !data.ord.isPsi || data.ord.ordinal.lte(boostReq()) || data.boost.times >= Number.MAX_VALUE) return 1
+    if (!data.sToggles[7] || !data.ord.isPsi || data.ord.ordinal.lte(boostReq()) || data.boost.times >= Number.MAX_VALUE) return (data.cappedMode && data.boost.times >= 33 ? singEffects[4].effect() : 1)
     let maxBoost = data.boost.times
     while (data.ord.ordinal.gte(boostReq(maxBoost)) && maxBoost < boostLimit()) {
         maxBoost++
@@ -240,6 +241,7 @@ function getBulkBoostAmt(){
             break
         }
     }
+    if (data.cappedMode && maxBoost >= boostLimit()) maxBoost += (singEffects[4].effect() - 1)
     return Math.min(Math.max(maxBoost - data.boost.times, 1), Number.MAX_VALUE)
     //return Math.round(Math.log(data.ord.ordinal/40)/Math.log(3)) - data.boost.times
 }

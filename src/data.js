@@ -51,6 +51,7 @@ function getDefaultObject() {
         incrementyInChal: false,
         omegaMode: false,
         x1000: false,
+        cappedMode: false,
     }
 }
 let data = getDefaultObject()
@@ -90,6 +91,10 @@ function fixSave(main=getDefaultObject(), data) {
 }
 function fixOldSaves(){
     let extra = false
+
+    //Add Pringles Cap for capped mode
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if (data.cappedMode && data.ord.isPsi && data.ord.ordinal.gt(ordinalCap)) data.ord.ordinal = ordinalCap
 
     //Settings fix
     if(typeof data.sToggles === "number") data.sToggles = settingsDefaults

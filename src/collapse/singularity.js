@@ -18,8 +18,14 @@ function updateSingLevelHTML(){
     DOM(`singLevel`).innerHTML = `Your Singularity has a density of <b>${data.sing.level >= 0 ? ordinalDisplay('H', data.sing.level, 0, 10, ordinalDisplayTrim(3), false) : `H<sub>0</sub>`}</b> (10)`
     DOM(`singLevel2`).innerHTML = `Your Singularity's highest ever density was <b>${data.sing.highestLevel > 0 ? ordinalDisplay('H', data.sing.highestLevel, 0, 10, ordinalDisplayTrim(3), false) : `H<sub>0</sub>`}</b> (10)`
 
-    for (let i = 0; i < singEffects.length; i++) {
-        DOM(`singEffect${i}`).innerHTML = `Your Singularity is ${singEffects[i].desc} <b>${format(singEffects[i].effect(), 3)}</b>`
+    for (let i = 0; i < (data.cappedMode ? 5 : 3); i++) {
+        let singEffectText = (i === 3) ? displayPsiOrd(singEffects[i].effect()) : format(singEffects[i].effect(), 3)
+        DOM(`singEffect${i}`).innerHTML = `Your Singularity is ${singEffects[i].desc} <b>${singEffectText}</b>`
+    }
+    if (!data.cappedMode) {
+        for (let i = 3; i < 5; i++) {
+            DOM(`singEffect${i}`).innerHTML = ``
+        }
     }
 }
 function updateSingFunctionHTML(i){
@@ -68,6 +74,9 @@ let singEffects = [
     {desc: "raising Cardinal gain to the", effect: () => (1 + Math.sqrt(data.sing.level)/100)*alephEffect(8)},
     {desc: "reducing the Decrementy gain exponent by", effect: () => Math.sqrt(data.sing.level)/50},
     {desc: "raising AutoBuyer speed to the", effect: () => 1-Math.pow(data.sing.level, 1/2)/100},
+    //capped mode only
+    {desc: "raising the Factor Boosts 34+ requirement and the Ordinal Cap to", effect: () => D(BHO_VALUE).times(D(3).pow(data.sing.level))},
+    {desc: "multiplying Factor Boost gain by", effect: () => inAnyPurification() ? 1 : (data.sing.level * 2) + 1},
 ]
 let maxSingLevel = () => data.incrementy.charge
 

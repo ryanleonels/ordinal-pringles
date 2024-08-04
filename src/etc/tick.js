@@ -7,9 +7,10 @@ let t2AutoPure = () => D(1).times(chalEffectTotal()).times(bup5Effect()).times(i
     .times(bup48Effect()).times(hupData[5].effect()).times(alephEffect(1)).times(cupEffect(0)).times(cupEffect(3))
     .times(dupEffect(0)).times(getAOEffect(0)).times(inPurification(2) || inPurification(3) ? getAOREffect(4) : 1)
 
-let t2Auto = () => inPurification(2)
-    ? D(hierarchyData[0].gain()*data.incrementy.totalCharge)
-    :  t2AutoPure().div(purificationData[1].special()).pow(singEffects[2].effect())
+let t2Auto = () => (inPurification(2)
+        ? D(hierarchyData[0].gain()*data.incrementy.totalCharge)
+        : t2AutoPure().div(purificationData[1].special()).pow(singEffects[2].effect())
+    ).div((data.cappedMode && inAnyPurification() && data.boost.times > 33) ? D(3).pow(data.boost.times - 33) : 1)
 
 
 function tick(diff){
@@ -76,6 +77,8 @@ function tick(diff){
     let boostCheck = data.boost.times > 0 || data.collapse.hasSluggish[0]
     if(timesToLoop[3].gte(1) && data.ord.isPsi && data.autoStatus.enabled[1] && !boostCheck && data.ord.isPsi) data.ord.ordinal = D(GRAHAMS_VALUE)
     if(timesToLoop[3].gte(1) && data.ord.isPsi && data.autoStatus.enabled[1] && collapseCheck && boostCheck) markup(timesToLoop[3].times(diff/1000))
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if (data.cappedMode && data.ord.isPsi && data.ord.ordinal.gt(ordinalCap)) data.ord.ordinal = ordinalCap
 
     // Automation Tier 2: Post-Collapse
     if(data.collapse.hasSluggish[2] && data.autoStatus.enabled[2]) sacrificeIncrementy() //Charge Autobuyer
@@ -110,7 +113,7 @@ function tick(diff){
     let inSluggish = false
     if (data.boost.times === 2 && !data.collapse.hasSluggish[4]) inSluggish = true
     if(data.collapse.hasSluggish[3] && data.collapse.apEnabled[0] && data.ord.base > 3 - data.base2 && data.markup.shifts < 7 + data.base2) factorShift(true)
-    if(data.collapse.hasSluggish[3] && data.collapse.apEnabled[1] && data.boost.times < boostLimit() && !inSluggish) boost(false, true)
+    if(data.collapse.hasSluggish[3] && data.collapse.apEnabled[1] && (data.cappedMode || data.boost.times < boostLimit()) && !inSluggish) boost(false, true)
 
     // Increase Hierarchies
     if(data.boost.unlocks[2] && !inPurification(2) && !inPurification(3)) increaseHierarchies(diff)

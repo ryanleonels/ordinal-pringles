@@ -160,6 +160,17 @@ function toggleOmegaMode(){
     return save()
 }
 
+function toggleCappedMode(){
+    data.cappedMode = !data.cappedMode
+    DOM(`cappedModeToggle`).innerHTML = `Toggle Capped Mode ${settingsColor(data.cappedMode)}`
+    let ordinalCap = D(BHO_VALUE).times(D(3).pow(data.sing.level))
+    if (data.cappedMode && data.ord.isPsi && data.ord.ordinal > ordinalCap) {
+        data.ord.ordinal = ordinalCap
+    }
+    //collapseReset()
+    return save()
+}
+
 function toggleX1000(){
     data.x1000 = !data.x1000
     DOM(`x1000Toggle`).innerHTML = `Toggle x1000 Gameplay Speed ${settingsColor(data.x1000)}`
@@ -177,6 +188,7 @@ function loadSettings(){
     DOM(`incrementyInChalToggle`).innerHTML = `Toggle Incrementy Gain in Challenges ${settingsColor(data.incrementyInChal)}`
     DOM(`omegaModeToggle`).innerHTML = `Toggle Omega Mode ${settingsColor(data.omegaMode)}`
     DOM(`x1000Toggle`).innerHTML = `Toggle x1000 Gameplay Speed ${settingsColor(data.x1000)}`
+    DOM(`cappedModeToggle`).innerHTML = `Toggle Capped Mode ${settingsColor(data.cappedMode)}`
     DOM(`gwaifyToggle`).innerHTML = `<img src='https://cdn.discordapp.com/emojis/853002327362895882.webp?size=24'> Display ${settingsColor(data.gword.enabled)}`
     DOM(`changeOrdLength`).children[0].innerHTML = `[${data.ord.trim}]`
 
