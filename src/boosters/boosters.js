@@ -195,7 +195,7 @@ function boost(f=false, auto=false, hotkey=false){
     if((!data.ord.isPsi || data.ord.ordinal.lt(boostReq())) && (auto || hotkey)) return
     if((!data.ord.isPsi || data.ord.ordinal.lt(boostReq())) && !f) return createAlert("Failure", "Insufficient Ordinal", "Dang.")
 
-    if(data.boost.times === boostLimit()) return createAlert("The End... for now!", "You've reached the current Endgame!", "Thanks!")
+    //if(data.boost.times === boostLimit()) return createAlert("The End... for now!", "You've reached the current Endgame!", "Thanks!")
 
     if(data.boost.times === 0){
         DOM('boostNav').style.display = 'block'

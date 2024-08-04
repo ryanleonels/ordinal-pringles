@@ -7,9 +7,10 @@ let t2AutoPure = () => D(1).times(chalEffectTotal()).times(bup5Effect()).times(i
     .times(bup48Effect()).times(hupData[5].effect()).times(alephEffect(1)).times(cupEffect(0)).times(cupEffect(3))
     .times(dupEffect(0)).times(getAOEffect(0)).times(inPurification(2) || inPurification(3) ? getAOREffect(4) : 1)
 
-let t2Auto = () => inPurification(2)
-    ? D(hierarchyData[0].gain()*data.incrementy.totalCharge)
-    :  t2AutoPure().div(purificationData[1].special()).pow(singEffects[2].effect())
+let t2Auto = () => (inPurification(2)
+        ? D(hierarchyData[0].gain()*data.incrementy.totalCharge)
+        : t2AutoPure().div(purificationData[1].special()).pow(singEffects[2].effect())
+        ).div((inAnyPurification() && data.boost.times > 33) ? D(3).pow(data.boost.times - 33) : 1)
 
 
 function tick(diff){
@@ -29,8 +30,6 @@ function tick(diff){
 
     timesToLoop[2] = data.boost.hasBUP[autoUps[0]] ? D(1) : D(0)
     timesToLoop[3] = data.boost.hasBUP[autoUps[1]] ? t2Auto() : D(0)
-
-    if (inAnyPurification() && data.boost.times > 33) timesToLoop[3] = timesToLoop[3].div(D(3).pow(data.boost.times - 33))
 
     if(Decimal.floor(D(timesToLoop[0]).div(1000)).gte(1)) {
         successor()
