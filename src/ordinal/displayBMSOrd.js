@@ -32,7 +32,7 @@ function displayBMSOrd(ord, over, base, trim = data.ord.trim, depth = 0, final =
     let curBMS = "("+depth+")"
     if (magnitude >= 1) curBMS += displayBMSOrd(magnitude, 0, base, trim, depth + 1, false)
     let finalOutput = ""
-    for (let i = 0; i < amount; i++) finalOutput += curBMS
+    for (let i = 0; i < Math.min(amount, data.ord.trim); i++) finalOutput += curBMS
     const firstAmount = amount*magnitudeAmount
     if(ord-firstAmount > 0.1) finalOutput += displayBMSOrd(ord-firstAmount, over, base, trim - 1, depth, false)
     return final ? trimBMSFinalOutput(finalOutput, trim) : finalOutput
@@ -41,6 +41,11 @@ function displayBMSOrd(ord, over, base, trim = data.ord.trim, depth = 0, final =
 // Displays Ordinals using BMS when the value of ord is greater than NUMBER.MAX_VALUE
 function displayInfiniteBMSOrd(ord, over, base, trim = data.ord.trim, depth = 0, final = true, recursionDepth = 0){
     let maxRecursionDepth = 1000 // needed as the recursion can be very deep in certain cases
+    // handle huge ordinals
+    /*if (D(ord).gt(Decimal.tetrate(base,Math.min(data.ord.trim+1,maxRecursionDepth)))) {
+        ord1 = Decimal.tetrate(base,Math.min(data.ord.trim+1,maxRecursionDepth))
+        return displayInfiniteBMSOrd(ord1, over, base, trim, depth, final, recursionDepth) + "..."
+    }*/
     ord = Decimal.floor(ord)
     over = Decimal.floor(over)
     if (final && ord.toNumber() === 0) return "0"
@@ -50,7 +55,7 @@ function displayInfiniteBMSOrd(ord, over, base, trim = data.ord.trim, depth = 0,
         if (over>trim) n = ord.plus(trim) // preventing the ordinal display from extend without limit
         let curBMS = "("+depth+")"
         let finalOutput = ""
-        for (let i = 0; i < n.toNumber(); i++) finalOutput += curBMS
+        for (let i = 0; i < Decimal.min(n, data.ord.trim).toNumber(); i++) finalOutput += curBMS
         if (over>trim) finalOutput += "..."
         return final ? trimBMSFinalOutput(finalOutput, trim) : finalOutput
     }
@@ -60,7 +65,7 @@ function displayInfiniteBMSOrd(ord, over, base, trim = data.ord.trim, depth = 0,
     let curBMS = "("+depth+")"
     if (magnitude.gte(1)) curBMS += displayInfiniteBMSOrd(magnitude, 0, base, trim, depth + 1, false, recursionDepth + 1)
     let finalOutput = ""
-    for (let i = 0; i < amount.toNumber(); i++) finalOutput += curBMS
+    for (let i = 0; i < Decimal.min(amount, data.ord.trim).toNumber(); i++) finalOutput += curBMS
     const firstAmount = amount.times(magnitudeAmount)
     if(ord.sub(firstAmount).gt(0.1)) finalOutput += displayInfiniteBMSOrd(ord-firstAmount, over, base, trim - 1, depth, false, recursionDepth)
     return final ? trimBMSFinalOutput(finalOutput, trim) : finalOutput

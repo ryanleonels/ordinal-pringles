@@ -299,6 +299,12 @@ function bigHardy(ord, base, over=0)
         return "{" + base + "," + base + "[" + highestPower.log(base).log(base).add(1).floor().toNumber() + "]2}";
     }
 
+    // handle huge ordinals
+    if (ord1.gte(Decimal.tetrate(base,data.ord.trim+1))) {
+        nLayer = Decimal.slog(ord1, base)
+        return "{" + base + "," + D(nLayer).floor().toString() + "[1/2]2}";
+    }
+
     // w^(w^w) level and above (w^^n level) - extremely simplified as it's highly unreachable (ord > 4^^4)
     //if (highestPower.lt(EN(base).tetr(base)) || ord < 4e270) { // second condition for e.g. base 2/3 just in case (although it's normally not valid/possible)
     // 3: 1,2

@@ -22,6 +22,11 @@ function displayOrd(ord,over,base,trim = data.ord.trim,forcePsi = false) {
 // Displays Ordinals when the value of ord is greater than NUMBER.MAX_VALUE
 function displayInfiniteOrd(ord, over, base, trim = data.ord.trim, recursionDepth = 0){
     let maxRecursionDepth = 1000 // needed as the recursion can be very deep in certain cases
+    // handle huge ordinals
+    if (D(ord).gte(Decimal.tetrate(base,Math.min(data.ord.trim+1,maxRecursionDepth)))) {
+        nLayer = Decimal.slog(ord, base).floor()
+        return "&omega;^^" + nLayer
+    }
     ord = Decimal.floor(ord)
     over = Decimal.floor(over)
     if(trim <= 0 || recursionDepth >= maxRecursionDepth) return `...`
