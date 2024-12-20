@@ -23,9 +23,9 @@ function displayOrd(ord,over,base,trim = data.ord.trim,forcePsi = false) {
 function displayInfiniteOrd(ord, over, base, trim = data.ord.trim, recursionDepth = 0){
     let maxRecursionDepth = 1000 // needed as the recursion can be very deep in certain cases
     // handle huge ordinals
-    if (D(ord).gte(Decimal.tetrate(base,Math.min(data.ord.trim+1,maxRecursionDepth)))) {
+    if (D(ord).gte(Decimal.tetrate(base,Math.min(Math.max(data.ord.trim+1,data.ord.base),maxRecursionDepth)))) {
         nLayer = Decimal.slog(ord, base).floor()
-        return "&omega;^^" + nLayer
+        return "&omega;^^" + displayInfiniteOrd(nLayer, over, base, trim, recursionDepth)
     }
     ord = Decimal.floor(ord)
     over = Decimal.floor(over)
